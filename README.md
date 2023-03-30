@@ -1,7 +1,6 @@
-# FAS-3-Application-Factory
-(FAS, Flask App Structure)
+# EasyQuest
 
-Contains a working example of a package Flask App
+Quest based system inspired by Pathfinder and DnD.
 
 ### Attribution
 
