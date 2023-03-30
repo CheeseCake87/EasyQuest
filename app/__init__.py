@@ -15,4 +15,10 @@ def create_app():
     bigapp.init_app(app)
     db.init_app(app)
 
+    bigapp.import_models(from_folder="models")
+    bigapp.import_blueprints("blueprints")
+
+    with app.app_context():
+        db.create_all()
+
     return app
