@@ -13,6 +13,7 @@ ERROR_404_HELP = true
 SQLALCHEMY_TRACK_MODIFICATIONS = false
 EXPLAIN_TEMPLATE_LOADING = false
 
+
 # [database.main] is loaded as SQLALCHEMY_DATABASE_URI
 # type = mysql / postgresql / sqlite
 # if type = sqlite, config parser will ignore username and password
