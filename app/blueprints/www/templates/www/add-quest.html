@@ -1,0 +1,17 @@
+{% extends "extends/main.html" %}
+{% block title %}Add Quest{% endblock %}
+
+
+{% block container %}
+    <h3>Add Quest</h3>
+    <form>
+        <label for="fk_genre_id">Genre</label>
+        <select name="fk_genre_id" id="fk_genre_id">
+
+        </select>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" class="w-100">
+        <label for="summary">Summary</label>
+        <textarea name="summary" id="summary"></textarea>
+    </form>
+{% endblock %}
