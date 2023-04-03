@@ -1,9 +1,8 @@
-from flask import render_template
+from flask import url_for, redirect
 
 from .. import bp
 
 
 @bp.route("/", methods=["GET"])
 def index():
-    return render_template(bp.tmpl("index.html"))
-
+    return redirect(url_for("www.quests"))
