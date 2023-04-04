@@ -46,12 +46,12 @@ def create_app():
         print(view_result)
 
         update_result = bigapp.model("Genre").update(
-            field=("genre", "Horror"), values={"description": "Horror"}, return_updated=True
+            field=("genre", "Horror"), values={"description": "Horror"}
         )
         print("update_result")
         print(update_result)
 
-        delete_result = bigapp.model("Genre").delete(id_=1, return_deleted=True)
+        delete_result = bigapp.model("Genre").delete(id_=1)
         print("delete_result")
         print(delete_result)
 
