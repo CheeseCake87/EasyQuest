@@ -23,20 +23,36 @@ def create_app():
     with app.app_context():
         db.drop_all()
         db.create_all()
-        # result = bigapp.model("Genre").create(
-        #     batch=[
-        #         {"genre": "Action"},
-        #         {"genre": "Adventure"},
-        #         {"genre": "Comedy"},
-        #         {"genre": "Crime"},
-        #         {"genre": "Drama"},
-        #         {"genre": "Fantasy"},
-        #         {"genre": "Historical"},
-        #     ]
-        # )
-        result = bigapp.model("Genre").create(
-            genre="Horror",
+        add_result = bigapp.model("Genre").create(
+            batch=[
+                {"genre": "Action"},
+                {"genre": "Horror"},
+                {"genre": "Adventure"},
+                {"genre": "Comedy"},
+                {"genre": "Crime"},
+                {"genre": "Drama"},
+                {"genre": "Fantasy"},
+                {"genre": "Historical"},
+            ]
         )
-        print(result)
+        # result = bigapp.model("Genre").create(
+        #     genre="Horror",
+        # )
+        print("add_result")
+        print(add_result)
+
+        view_result = bigapp.model("Genre").read(id_=1)
+        print("view_result")
+        print(view_result)
+
+        update_result = bigapp.model("Genre").update(
+            field=("genre", "Horror"), values={"description": "Horror"}, return_updated=True
+        )
+        print("update_result")
+        print(update_result)
+
+        delete_result = bigapp.model("Genre").delete(id_=1, return_deleted=True)
+        print("delete_result")
+        print(delete_result)
 
     return app
