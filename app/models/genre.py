@@ -87,8 +87,8 @@ class Genre(db.Model):
             result = db.session.execute(query.returning(cls)).scalars().all()
             db.session.commit()
             return result
-        result = db.session.execute(query)
-        return result
+        db.session.execute(query)
+        return True
 
     @classmethod
     def delete(
@@ -103,6 +103,6 @@ class Genre(db.Model):
             result = db.session.execute(query.returning(cls)).scalars().all()
             db.session.commit()
             return result
-        result = db.session.execute(query)
+        db.session.execute(query)
         db.session.commit()
-        return result
+        return True
