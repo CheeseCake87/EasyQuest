@@ -7,6 +7,7 @@ class User(db.Model, CrudMixin):
     user_id = schema.Column(types.Integer, primary_key=True)
 
     # Data
+    first_name = schema.Column(types.String(128), nullable=True)
     email_address = schema.Column(types.String(512), nullable=False)
     password = schema.Column(types.String(512), nullable=False)
     salt = schema.Column(types.String(4), nullable=False)
