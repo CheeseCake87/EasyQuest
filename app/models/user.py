@@ -1,18 +1,20 @@
 from . import *
+from .__mixins__ import CrudMixin
 
 
-class User(db.Model):
+class User(db.Model, CrudMixin):
     # PriKey
     user_id = schema.Column(types.Integer, primary_key=True)
 
     # Data
-    username = schema.Column(types.String(256), nullable=False)
+    email_address = schema.Column(types.String(512), nullable=False)
     password = schema.Column(types.String(512), nullable=False)
     salt = schema.Column(types.String(4), nullable=False)
+    passport = schema.Column(types.Integer, nullable=False)
     disabled = schema.Column(db.Boolean, default=False)
 
     # Permissions
-    # 10 = admin, 3 = manager, 2 = drafter, 1 = sales
+    # 10 = admin
     user_type = schema.Column(types.Integer, nullable=True)
 
     # Tracking

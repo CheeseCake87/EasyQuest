@@ -4,7 +4,7 @@
         <ul>
             <li><a href="#" {{ active_class if 'quest' in request.url }}>Quests</a></li>
             <li><a href="#" {{ active_class if 'character' in request.url }}>Characters</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
         </ul>
     </nav>
 </section>

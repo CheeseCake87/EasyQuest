@@ -4,7 +4,7 @@ from datetime import timedelta
 from pytz import timezone
 from sqlalchemy import schema, types, select, update, insert, delete
 
-from app import db
+from app.extensions import db
 
 
 def dater(ltz: str = "Europe/London", mask: str = "%Y-%m-%d %H:%M:%S", days_delta: int = 0) -> datetime:

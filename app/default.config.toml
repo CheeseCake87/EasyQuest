@@ -12,13 +12,12 @@ SESSION_TIME = 480
 ERROR_404_HELP = true
 SQLALCHEMY_TRACK_MODIFICATIONS = false
 EXPLAIN_TEMPLATE_LOADING = false
-
+RESET_DB = true
 
 # [database.main] is loaded as SQLALCHEMY_DATABASE_URI
 # type = mysql / postgresql / sqlite
 # if type = sqlite, config parser will ignore username and password
 [database]
-
 [database.main]
 enabled = true
 type = "sqlite"
@@ -27,3 +26,8 @@ location = "db"
 port = ""
 username = "user"
 password = "password"
+
+[session]
+user_id = 0
+passport = 0
+authenticated = false

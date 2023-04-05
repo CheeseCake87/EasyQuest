@@ -1,7 +1,8 @@
 from . import *
+from .__mixins__ import CrudMixin
 
 
-class Character(db.Model):
+class Character(db.Model, CrudMixin):
     # PriKey
     character_id = schema.Column(types.Integer, primary_key=True)
 
