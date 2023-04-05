@@ -23,10 +23,10 @@ Viewing the source code of this project acknowledges that you have read and unde
 
 ```text
 # Linux
-cd /path/to/FAS-3-Application-Factory
+cd /path/to/EasyQuest
 
 # Windows
-cd C:\path\to\FAS-3-Application-Factory
+cd C:\path\to\EasyQuest
 ```
 
 ---
