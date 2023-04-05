@@ -1,0 +1,13 @@
+enabled = "yes"
+
+[settings]
+url_prefix = "/register"
+#subdomain = ""
+#url_defaults = {}
+static_folder = "static"
+template_folder = "templates"
+static_url_path = "/register/static"
+
+#[session]
+#register_session = "yes"
+
