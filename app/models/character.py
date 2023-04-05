@@ -3,6 +3,8 @@ from .__mixins__ import CrudMixin
 
 
 class Character(db.Model, CrudMixin):
+    id_field = "character_id"
+    
     # PriKey
     character_id = schema.Column(types.Integer, primary_key=True)
 

@@ -1,0 +1,18 @@
+{% extends "extends/main.html" %}
+{% block title %}Genres{% endblock %}
+
+
+{% block container %}
+    <table>
+        <tr>
+            <th>Genre</th>
+            <th>Description</th>
+        </tr>
+        {% for genre in q_genres %}
+            <tr>
+                <td>{{ genre.genre }}</td>
+                <td>{{ genre.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

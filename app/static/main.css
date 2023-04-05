@@ -1,0 +1,35 @@
+[x-cloak] {
+    display: none;
+}
+
+.form {
+    box-sizing: border-box;
+}
+
+.form * input, textarea, select {
+    margin-bottom: 18px;
+    box-sizing: border-box;
+}
+
+.inputs-100 * input, textarea, select {
+    width: 100%;
+}
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.after-input-smalltext {
+    margin-top: -10px;
+}

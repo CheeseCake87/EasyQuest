@@ -14,3 +14,10 @@ class Genre(db.Model, CrudMixin):
 
     # Tracking
     created = schema.Column(types.DateTime, default=dater())
+
+    # Relationships
+    rel_quests = relationship(
+        "Quest",
+        primaryjoin="Quest.fk_genre_id==Genre.genre_id",
+        back_populates="rel_genre"
+    )

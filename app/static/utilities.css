@@ -2,6 +2,9 @@
     width: 100%;
 }
 
-input {
-    box-sizing: border-box;
+.disabled-link {
+    pointer-events: none;
+    cursor: default;
+    color: rgba(255,255,255,0.2);
+    text-decoration: line-through;
 }

@@ -29,5 +29,7 @@ password = "password"
 
 [session]
 user_id = 0
+user_type = 0
 passport = 0
 authenticated = false
+temp = { }

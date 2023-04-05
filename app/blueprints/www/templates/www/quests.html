@@ -3,5 +3,103 @@
 
 
 {% block container %}
-    <p>www index</p>
+
+    <div x-data="{show_add: false, genre: 0, genre_desc: 'Pick a genre!'}">
+        <form class="form inputs-100"
+              action="{{ url_for('www.add_quest') }}"
+              x-ref="add_quest"
+              method="post">
+
+            <div class="button-group" x-show="!show_add" x-cloak>
+                <button type="button" @click="show_add = true">
+                    Add Quest
+                </button>
+            </div>
+
+            <div class="button-group" x-show="show_add" x-cloak>
+                <button type="button" @click="$refs.add_quest.reset(); show_add = false;">
+                    Cancel
+                </button>
+                <button type="submit">Save Quest</button>
+            </div>
+
+            <div x-show="show_add" x-cloak x-collapse>
+
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" value="" required>
+
+                <label for="fk_genre_id">Genre</label>
+                <select name="fk_genre_id" id="fk_genre_id" x-model="genre" required>
+                    <option>Select...</option>
+                    {% for genre in q_genres %}
+                        <option value="{{ genre.genre_id }}">
+                            {{ genre.genre }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                {% for genre in q_genres %}
+                    <p class="after-input-smalltext" x-show="genre === '{{ genre.genre_id }}'">
+                        <small>{{ genre.description }}</small></p>
+                {% endfor %}
+
+                <label for="summary">Summary</label>
+                <textarea name="summary" id="summary" cols="30" rows="5" required></textarea>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Summary</th>
+            <th>&nbsp;</th>
+        </tr>
+        {% if q_live_quests %}
+            {% for quest in q_live_quests %}
+                <tr>
+                    <td>{{ quest.title }}</td>
+                    <td>{{ quest.rel_genre }}</td>
+                    <td>{{ quest.summary }}</td>
+                    <td style="text-align: right">
+                        <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center">No live quests yet! Check back soon</td>
+            </tr>
+        {% endif %}
+    </table>
+
+    <h3>Under Construction</h3>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Summary</th>
+            <th>&nbsp;</th>
+        </tr>
+        {% for quest in q_pending_quests %}
+            <tr>
+                <td>{{ quest.title }}</td>
+                <td>{{ quest.rel_genre.genre }}</td>
+                <td>{{ quest.summary }}</td>
+                <td style="text-align: right">
+                    {% if session.get('user_type') == 10 %}
+                        <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">View</a>
+                    {% else %}
+                        <a class="disabled-link">View</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}
