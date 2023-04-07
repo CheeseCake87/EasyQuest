@@ -6,12 +6,30 @@
     box-sizing: border-box;
 }
 
-.form * input, textarea, select {
+.form input {
     margin-bottom: 18px;
     box-sizing: border-box;
 }
 
-.inputs-100 * input, textarea, select {
+.form textarea {
+    margin-bottom: 18px;
+    box-sizing: border-box;
+}
+
+.form select {
+    margin-bottom: 18px;
+    box-sizing: border-box;
+}
+
+.inputs-100 input {
+    width: 100%;
+}
+
+.inputs-100 textarea {
+    width: 100%;
+}
+
+.inputs-100 select {
     width: 100%;
 }
 
@@ -27,9 +45,90 @@
     justify-content: start;
     align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
+}
+
+.action-box {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.quest-group-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+}
+
+.quest-box {
+    padding: 10px 14px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.quest-box-active {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.quest-box-flat {
+    padding: 10px 14px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.character-box-flat {
+    padding: 10px 14px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.quest-box:hover {
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.quest-box > h1, .quest-box > h2, .quest-box > h3 {
+    margin-top: 0;
+}
+
+.quest-box-flat > h1, .quest-box-flat > h2 {
+    margin-top: 0;
+}
+
+.quest-box p {
+    margin-bottom: 0;
 }
 
 .after-input-smalltext {
     margin-top: -10px;
+}
+
+.desktop {
+    display: block;
+}
+
+.mobile {
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: block;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group button, a {
+        width: 100%;
+    }
 }

@@ -3,37 +3,38 @@
 
 
 {% block container %}
-    <form action="{{ url_for('www.update_quest', quest_id=q_quest.quest_id) }}"
-          method="post"
-          x-data="{genre: '{{ q_quest.fk_genre_id }}'}">
+    <div class="quest-box-flat mt-2 mb-2">
+        <h1>{{ q_quest.title }}</h1>
+        <cite>{{ q_quest.rel_genre.genre }}</cite>
+        <p>{{ q_quest.summary }}</p>
+    </div>
 
-        <div class="button-group">
-            <a href="{{ url_for('www.quests') }}">
-                <button type="button">Cancel</button>
-            </a>
-            <button type="submit">Save Quest</button>
+    {% if character %}
+        <h1>Your Character</h1>
+        <h2>{{ character.full_name }}</h2>
+        <p class="mb-0"><cite>{{ character.arc }}</cite></p>
+        <p class="mt-0"><small><cite>{{ character.arc_card.get('description') }}</cite></small></p>
+
+        <div class="quest-group-box mt-4">
+            <div class="character-box-flat">
+                <h3 class="mt-1">Modifier</h3>
+                <p>{{ character.arc_card.get('modifier') }}</p>
+            </div>
+            <div class="character-box-flat">
+                <h3 class="mt-1">Bonus</h3>
+                <p>{{ character.arc_card.get('bonus') }}</p>
+            </div>
         </div>
 
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" value="{{ q_quest.title }}" required>
+        <h3>Back Story</h3>
+        <p>{{ character.arc_card.get('back_story') }}</p>
 
-        <label for="fk_genre_id">Genre</label>
-        <select name="fk_genre_id" id="fk_genre_id" x-model="genre" required>
-            <option>Select...</option>
-            {% for genre in q_genres %}
-                <option value="{{ genre.genre_id }}">
-                    {{ genre.genre }}
-                </option>
-            {% endfor %}
-        </select>
+    {% else %}
+        <div class="action-box">
+            <a href="{{ url_for("www.create_quest_character", quest_id=q_quest.quest_id ) }}">
+                <button class="w-100">Create Character</button>
+            </a>
+        </div>
+    {% endif %}
 
-        {% for genre in q_genres %}
-            <p class="after-input-smalltext" x-show="genre === '{{ genre.genre_id }}'">
-                <small>{{ genre.description }}</small></p>
-        {% endfor %}
-
-        <label for="summary">Summary</label>
-        <textarea name="summary" id="summary" cols="30" rows="5" required>{{ q_quest.summary }}</textarea>
-
-    </form>
 {% endblock %}

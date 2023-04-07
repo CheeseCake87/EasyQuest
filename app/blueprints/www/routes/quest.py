@@ -1,7 +1,10 @@
-from flask import render_template, request, redirect, url_for, flash
+import json
 
-from app.models.quest import Quest
+from flask import render_template, request, redirect, url_for, flash, session
+
+from app.models.character import Character
 from app.models.genre import Genre
+from app.models.quest import Quest
 from .. import bp
 
 
@@ -13,62 +16,114 @@ def quest(quest_id):
         flash("Quest not found", "bad")
         return redirect(url_for("www.quests"))
 
-    q_genres = Genre.read(all_rows=True, order_by="created")
+    character = Character.read(
+        fields={
+            "fk_quest_id": quest_id,
+            "fk_user_id": session.get("user_id")
+        }
+    )
 
     return render_template(
         bp.tmpl("quest.html"),
+        q_quest=q_quest,
+        character=None if not character else character[0]
+    )
+
+
+@bp.get("/edit/quest/<quest_id>")
+def edit_quest(quest_id):
+    if session.get("user_type") != 10:
+        return redirect(url_for("www.index"))
+
+    q_quest = Quest.read(id_=quest_id)
+
+    if not q_quest:
+        flash("Quest not found", "bad")
+        return redirect(url_for("www.quests"))
+
+    q_genres = Genre.read(all_rows=True, order_by="created")
+
+    return render_template(
+        bp.tmpl("edit-quest.html"),
         q_quest=q_quest,
         q_genres=q_genres,
     )
 
 
 @bp.get("/make-pending/quest/<quest_id>")
-def make_pending_quest(quest_id):
-    Quest.update(id_=quest_id, fields={"live": False})
+def quest_pending(quest_id):
+    if session.get("user_type") != 10:
+        return redirect(url_for("www.index"))
+
+    Quest.update(id_=quest_id, values={"live": False})
     flash("Quest is now pending", "good")
+    if request.args.get("var") == "edit":
+        return redirect(url_for("www.edit_quest", quest_id=quest_id))
     return redirect(url_for("www.quest", quest_id=quest_id))
 
 
 @bp.get("/make-live/quest/<quest_id>")
-def make_live_quest(quest_id):
-    Quest.update(id_=quest_id, fields={"live": True})
+def quest_live(quest_id):
+    if session.get("user_type") != 10:
+        return redirect(url_for("www.index"))
+
+    Quest.update(id_=quest_id, values={"live": True})
     flash("Quest is now live", "good")
+    if request.args.get("var") == "edit":
+        return redirect(url_for("www.edit_quest", quest_id=quest_id))
     return redirect(url_for("www.quest", quest_id=quest_id))
 
 
 @bp.post("/add/quest")
 def add_quest():
+    if session.get("user_type") != 10:
+        return redirect(url_for("www.index"))
+
     title = request.form.get("title")
-    summary = request.form.get("summary")
     fk_genre_id = request.form.get("fk_genre_id")
 
     new_quest = Quest.create(
         {
             "title": title,
-            "summary": summary,
             "fk_genre_id": fk_genre_id,
             "live": False,
         }
     )
 
-    return redirect(url_for("www.quest", quest_id=new_quest.quest_id))
+    return redirect(url_for("www.edit_quest", quest_id=new_quest.quest_id))
 
 
 @bp.post("/update/quest/<quest_id>")
 def update_quest(quest_id):
+    if session.get("user_type") != 10:
+        return redirect(url_for("www.index"))
+
     title = request.form.get("title")
     summary = request.form.get("summary")
+    arc_cards = request.form.get("arc_cards")
     fk_genre_id = request.form.get("fk_genre_id")
 
-    Quest.update(id_=quest_id, values={"title": title, "summary": summary, "fk_genre_id": fk_genre_id})
+    arc_cards_json = json.loads(arc_cards)
+
+    Quest.update(
+        id_=quest_id,
+        values={
+            "title": title,
+            "summary": summary,
+            "arc_cards": arc_cards_json,
+            "fk_genre_id": fk_genre_id
+        }
+    )
 
     flash("Quest updated", "good")
-    return redirect(url_for("www.quest", quest_id=quest_id))
+    return redirect(url_for("www.edit_quest", quest_id=quest_id))
 
 
-@bp.delete("/delete/quest/<quest_id>")
+@bp.get("/delete/quest/<quest_id>")
 def delete_quest(quest_id):
-    deleted_quest = Quest.delete(fields={"quest_id": quest_id}, return_deleted=True)
+    if session.get("user_type") != 10:
+        return redirect(url_for("www.index"))
 
-    flash(f"Deleted quest: {deleted_quest.title}", "good")
+    Quest.delete(fields={"quest_id": quest_id}, return_deleted=True)
+    flash(f"Quest deleted", "good")
     return redirect(url_for("www.quests"))

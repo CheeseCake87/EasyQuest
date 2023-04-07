@@ -1,7 +1,11 @@
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from app.extensions import *
 from app.globals.first_run import first_run
+
+load_dotenv()
 
 
 def create_app():
@@ -23,6 +27,7 @@ def create_app():
     bigapp.import_blueprints("blueprints")
 
     with app.app_context():
+        db.create_all()
         if sysconf.getboolean("SYSTEM", "FIRST_RUN"):
             print("First run detected, creating database...")
             sysconf.set("SYSTEM", "FIRST_RUN", "false")

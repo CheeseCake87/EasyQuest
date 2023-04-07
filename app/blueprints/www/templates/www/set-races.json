@@ -1,0 +1,62 @@
+{
+  "Arlians": {
+    "description": "A race of humans who live in the mountainous regions of the continent, the Arlians are known for their expert metalworking and their use of magic in crafting weapons and armor. They have a proud warrior culture and are fiercely independent.",
+    "modifier": "Arlians have magic infused into their weapons and armor, and can use magic to enhance their combat abilities.",
+    "bonus": "+5 to a single attack or defense roll, can only be used once per encounter.",
+    "weapon": "Magic Infused Duel Swords"
+  },
+  "Kavaris": {
+    "description": "A race of humans who live in the lush jungles of the south, the Kavari are known for their use of poisons and their ability to navigate the complex jungle terrain. They have a communal culture and place a high value on cooperation and sharing.",
+    "modifier": "Kavaris can use poison to enhance their combat abilities.",
+    "bonus": "If a 5 or above is rolled, the target is becomes poisoned.",
+    "weapon": "Poison Infused Spear"
+  },
+  "Illuminians": {
+    "description": "A race of humans who live in the great cities and centers of learning, the Illuminians are known for their deep knowledge of magic and their use of technology to advance their civilization. They have a hierarchical society and value education and innovation.",
+    "modifier": "Illuminians have great knowledge of the world, and know weak points of their enemies.",
+    "bonus": "All enemies have a -3 to their defense rolls.",
+    "weapon": "Magic Infused Staff (Fire, Ice, Lightning)"
+  },
+  "Auriels": {
+    "description": "A race of humans who live in the rolling hills and grasslands of the central continent, the Auriels are known for their horsemanship and their skill at archery. They have a nomadic culture and travel from place to place with their herds.",
+    "modifier": "Auriels are skilled archers and can use their bow to enhance their combat abilities.",
+    "bonus": "If a 6 is rolled, the target is killed instantly.",
+    "weapon": "Long Bow"
+  },
+  "Dwarves": {
+    "description": "A hardy and industrious race of short, stocky beings, dwarves are expert craftsmen and miners. They are known for their skill with metalwork and stonework, and are often portrayed as living in underground cities deep within the earth. Dwarves are loyal to their clan and have a strong sense of honor.",
+    "modifier": "I cannot jump the distance, you'll have to toss me! Dwarves can be thrown by other players to reach otherwise unreachable areas.",
+    "bonus": "Player is throwable, If thrown at an enemy, the dwarf will deal 10 damage.",
+    "weapon": "Battle Axe"
+  },
+  "Elves": {
+    "description": "An ancient and graceful race of humanoid beings, elves are renowned for their beauty, intelligence, and healing abilities. They are skilled archers and are attuned to the natural world. Elves are often portrayed as guardians of the forest and its inhabitants, and are known for their long lifespans.",
+    "modifier": "Old Elven magic has powerful healing abilities.",
+    "bonus": "After every battle, each player can heal 10 HP.",
+    "weapon": "Short Bow"
+  },
+  "Orcs": {
+    "description": "A fierce and brutal race of humanoid beings, orcs are often depicted as barbarians or warriors. They are known for their strength and ferocity in battle, and are feared by many other races. Orcs have a tribal culture and are fiercely independent.",
+    "modifier": "Revenge is a powerful motivator for orcs.",
+    "bonus": "If a team member is hit, the orcs gain +1 to their attack rolls.",
+    "weapon": "Heavy Mace"
+  },
+  "Goblins": {
+    "description": "A cunning and mischievous race of small, green-skinned beings, goblins are often portrayed as tricksters. They are extremely skilled at thievery, and often live in caves or underground lairs.",
+    "modifier": "Goblins are opportunistic and will ally with whoever they think will benefit them the most.",
+    "bonus": "Roll a 4 or more to steal the target enemy's weapon. If failed, you will join the enemy's side.",
+    "weapon": "Dagger"
+  },
+  "Titans": {
+    "description": "A massive and imposing race of humanoid beings, Titans are larger than humans and possess incredible strength and durability. Titans have a slow and deliberate manner, but are immensely powerful when roused to action.",
+    "modifier": "Titans are slow, but can take a lot of damage.",
+    "bonus": "Extra 100 HP.",
+    "weapon": "Great Sword"
+  },
+  "Faun": {
+    "description": "A mischievous and carefree race of humanoid beings, Fauns possess goat-like horns and legs. They are known for their love of music and revelry, and often live in wooded areas. Fauns are playful and impulsive, but also possess a strong sense of loyalty to their friends.",
+    "modifier": "Music can be a confusing and powerful weapon. Play a song to confuse the enemy or empower another player. Enemies will attack each other and players will gain +1 to their attack rolls.",
+    "bonus": "If a 4 or above is rolled, cause enemy confusion or empower another player.",
+    "weapon": "Sling Shot and Fiddle"
+  }
+}

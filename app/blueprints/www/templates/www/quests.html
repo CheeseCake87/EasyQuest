@@ -3,8 +3,7 @@
 
 
 {% block container %}
-
-    <div x-data="{show_add: false, genre: 0, genre_desc: 'Pick a genre!'}">
+    <div class="action-box mb-1" x-data="{show_add: false, genre: 0}">
         <form class="form inputs-100"
               action="{{ url_for('www.add_quest') }}"
               x-ref="add_quest"
@@ -23,7 +22,7 @@
                 <button type="submit">Save Quest</button>
             </div>
 
-            <div x-show="show_add" x-cloak x-collapse>
+            <div class="pt-2" x-show="show_add" x-cloak x-collapse>
 
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" value="" required>
@@ -33,73 +32,98 @@
                     <option>Select...</option>
                     {% for genre in q_genres %}
                         <option value="{{ genre.genre_id }}">
-                            {{ genre.genre }}
+                            {{ genre.genre }} ({{ genre.description }})
                         </option>
                     {% endfor %}
                 </select>
 
-                {% for genre in q_genres %}
-                    <p class="after-input-smalltext" x-show="genre === '{{ genre.genre_id }}'">
-                        <small>{{ genre.description }}</small></p>
-                {% endfor %}
-
-                <label for="summary">Summary</label>
-                <textarea name="summary" id="summary" cols="30" rows="5" required></textarea>
-
             </div>
-
-
         </form>
-
-
     </div>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Summary</th>
-            <th>&nbsp;</th>
-        </tr>
-        {% if q_live_quests %}
-            {% for quest in q_live_quests %}
+
+    <div class="desktop">
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Status</th>
+                <th>&nbsp;</th>
+            </tr>
+            {% if q_quests %}
+                {% for quest in q_quests %}
+                    <tr>
+                        <td>{{ quest.title }}</td>
+                        <td>{{ quest.rel_genre.genre }}</td>
+                        <td>
+                            {% if not quest.finished %}
+                                {{ 'Live' if quest.live else 'Under Construction' }}
+                            {% else %}
+                                Finished
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right">
+                            {% if quest.finished %}
+                                -
+                            {% else %}
+                                {% if session.get('user_type') == 10 or quest.live %}
+                                    <a class="button-link"
+                                       href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">View</a>
+                                {% else %}
+                                    <a class="disabled-link">View</a>
+                                {% endif %}
+                                {% if session.get('user_type') == 10 %}
+                                    <a class="button-link"
+                                       href="{{ url_for('www.edit_quest', quest_id=quest.quest_id) }}">Edit</a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ quest.title }}</td>
-                    <td>{{ quest.rel_genre }}</td>
-                    <td>{{ quest.summary }}</td>
-                    <td style="text-align: right">
-                        <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">View</a>
-                    </td>
+                    <td colspan="4" style="text-align: center">No quests yet!
                 </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <div class="mobile">
+        {% if q_quests %}
+            {% for quest in q_quests %}
+                <div class="character-box-flat mb-1">
+                    <h3 class="mt-1">{{ quest.title }}</h3>
+                    <p>{{ quest.rel_genre.genre }}</p>
+                    {% if not quest.finished %}
+                        {% if quest.live %}
+                            <button class="bg-green w-100">Live</button>
+                        {% else %}
+                            <button class="bg-blue w-100">Under Construction</button>
+                        {% endif %}
+                    {% else %}
+                        <button class="bg-red w-100">Finished</button>
+                    {% endif %}
+
+                    {% if quest.live %}
+                        <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">
+                            <button class="w-100 mt-1">View</button>
+                        </a>
+                    {% else %}
+                        <button class="w-100 mt-1" disabled>View</button>
+                    {% endif %}
+
+                    {% if session.get('user_type') == 10 %}
+                        <a href="{{ url_for('www.edit_quest', quest_id=quest.quest_id) }}">
+                            <button class="w-100 mt-1">Edit</button>
+                        </a>
+                    {% endif %}
+
+                </div>
             {% endfor %}
         {% else %}
-            <tr>
-                <td colspan="4" style="text-align: center">No live quests yet! Check back soon</td>
-            </tr>
+            <div class="character-box-flat mb-1">
+                <p>No Quests</p>
+            </div>
         {% endif %}
-    </table>
-
-    <h3>Under Construction</h3>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Summary</th>
-            <th>&nbsp;</th>
-        </tr>
-        {% for quest in q_pending_quests %}
-            <tr>
-                <td>{{ quest.title }}</td>
-                <td>{{ quest.rel_genre.genre }}</td>
-                <td>{{ quest.summary }}</td>
-                <td style="text-align: right">
-                    {% if session.get('user_type') == 10 %}
-                        <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">View</a>
-                    {% else %}
-                        <a class="disabled-link">View</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    </div>
 
 {% endblock %}

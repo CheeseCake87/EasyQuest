@@ -1,6 +1,9 @@
+import os
+
 from flask import render_template, request, flash, redirect, url_for, session
 
 from app.extensions import auth
+from app.globals.email import send_email
 from app.models.user import User
 from .. import bp
 
@@ -46,6 +49,26 @@ def register_post():
     session['user_id'] = user.user_id
     session['passport'] = user.passport
     session['authenticated'] = True
+
+    email_body = f"""
+        <p>Hello,</p>
+        <p>Welcome to EasyQuest. That is all.</p>
+        <p>Thanks,</p>
+        <p>Bye</p>
+        """
+
+    send_email(
+        os.environ.get("EMAIL_ACCOUNT"),
+        f"Welcome to EasyQuest",
+        [email_address],
+        email_body,
+        "EasyQuest",
+        os.environ.get("EMAIL_ACCOUNT"),
+        os.environ.get("EMAIL_ACCOUNT"),
+        os.environ.get("EMAIL_PASSWORD"),
+        "smtp-mail.outlook.com",
+        587,
+    )
 
     flash('Registration successful', 'good')
     return redirect(url_for('www.quests'))

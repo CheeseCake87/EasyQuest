@@ -1,0 +1,35 @@
+{% extends "extends/main.html" %}
+{% block title %}Users{% endblock %}
+
+
+{% block container %}
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Email Address</th>
+            <th>Disabled</th>
+            <th>Characters</th>
+            <th>&nbsp;</th>
+        </tr>
+        {% for user in q_users %}
+            <tr>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.email_address }}</td>
+                <td>
+                    {{ user.disabled }}
+                </td>
+                <td>{{ user.rel_characters|length }}</td>
+                <td style="text-align: right">
+                    {% if user.disabled %}
+                        <a class="button-link"
+                           href="{{ url_for('www.enable_user', user_id=user.user_id) }}">Enable</a>
+                    {% else %}
+                        <a class="button-link"
+                           href="{{ url_for('www.disable_user', user_id=user.user_id) }}">Disable</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "extends/main.html" %}
+{% block title %}Create Character{% endblock %}
+
+
+{% block container %}
+    <div class="quest-box-flat">
+        <h1>{{ q_quest.title }}</h1>
+        <cite>{{ q_quest.rel_genre.genre }}</cite>
+        <p>{{ q_quest.summary }}</p>
+    </div>
+    <div x-data="{arc_card: '{{ q_character.arc }}'}">
+
+        <form
+                action="{{ url_for('www.update_character_to_quest', quest_id=q_quest.quest_id, character_id=q_character.character_id) }}"
+                method="post"
+        >
+            <h1>Edit your Character</h1>
+            <div class="form inputs-100">
+                <label for="full_name">Full Name</label>
+                <input type="text" name="full_name" id="full_name" value="{{ q_character.full_name }}">
+                <input type="hidden" name="arc_card" x-model="arc_card">
+            </div>
+
+            <h2>Choose your Arc Card</h2>
+            <div class="quest-group-box">
+                {% for arc, values in arc_cards.items() %}
+                    <div class="quest-box pb-2" @click="arc_card = '{{ arc }}'"
+                         :class="arc_card === '{{ arc }}' ? 'quest-box-active' : ''">
+                        <h2 class="mt-1">{{ arc }}</h2>
+                        <p>{{ values.description }}</p>
+                        <h4>Modifier</h4>
+                        <p>{{ values.modifier }}</p>
+                        <p>{{ values.bonus }}</p>
+                        <h4>Weapon</h4>
+                        <p>{{ values.weapon }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <h2>Write your back story</h2>
+            <textarea name="back_story" id="back_story" rows="15"
+                      placeholder="Who your character is, why they are who they are, what they value...">{{ q_character.back_story }}</textarea>
+            <button type="submit" class="w-100 mt-2 mb-2 pt-2 pb-2">Update Character</button>
+            <div class="action-box" x-data="{show_delete: false}">
+                <button type="button" x-show="!show_delete" @click="show_delete = true" class="w-100">Delete Character</button>
+                <a x-cloak
+                   x-show="show_delete"
+                   @click.outside="show_delete = false"
+                   href="{{ url_for('www.delete_character_from_quest', character_id=q_character.character_id, quest_id=q_quest.quest_id) }}">
+                    <button type="button" class="bg-red w-100">Confirm Delete</button>
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

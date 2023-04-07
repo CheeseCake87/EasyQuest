@@ -25,6 +25,13 @@ class User(db.Model, CrudMixin):
     created = schema.Column(types.DateTime, default=dater())
     deleted = schema.Column(types.Boolean, default=False)
 
+    # Relationships
+    rel_characters = relationship(
+        "Character",
+        primaryjoin="Character.fk_user_id==User.user_id",
+        back_populates="rel_user"
+    )
+
     @classmethod
     def login(cls, email_address, password):
         if email_address is None or password is None:
@@ -38,3 +45,13 @@ class User(db.Model, CrudMixin):
     @classmethod
     def exists(cls, email_address):
         return cls.read(fields={'email_address': email_address}, _auto_output=False).one_or_none() is not None
+
+    @classmethod
+    def enable(cls, user_id):
+        cls.update(id_=user_id, values={'disabled': False})
+        return
+
+    @classmethod
+    def disable(cls, user_id):
+        cls.update(id_=user_id, values={'disabled': True})
+        return

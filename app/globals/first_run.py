@@ -3,7 +3,7 @@ def first_run(db, bigapp, auth):
     db.create_all()
     bigapp.model("Genre").create(
         batch=[
-            {"genre": "Mythical Historical Fantasy", "description": "Swords, shields, bows and magic"},
+            {"genre": "Mythical Historic Fantasy", "description": "Swords, shields, bows and magic"},
             {"genre": "Cult Mystery", "description": "Cults, mysteries and conspiracies"},
             {"genre": "Zombie Apocalypse", "description": "Zombies, bandits and looting"},
             {"genre": "Apocalypse", "description": "Bandits and looting"},

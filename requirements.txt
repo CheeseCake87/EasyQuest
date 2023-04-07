@@ -1,4 +1,6 @@
 pytz
 flask
-flask-bigapp==2023.1.8.3
+flask-bigapp
 flask-sqlalchemy
+gunicorn
+python-dotenv

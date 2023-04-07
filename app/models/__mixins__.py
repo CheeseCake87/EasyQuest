@@ -79,11 +79,11 @@ class CrudMixin:
     @classmethod
     def update(
             cls,
+            values: dict,
             id_: int = None,
             field: tuple = None,
             fields: dict = None,
-            values: dict = None,
-            return_updated: bool = False
+            return_updated: bool = False,
     ):
         query = cls.read(id_=id_, field=field, fields=fields, _updating=True).values(values)
         if return_updated:
@@ -91,6 +91,7 @@ class CrudMixin:
             db.session.commit()
             return result
         db.session.execute(query)
+        db.session.commit()
         return True
 
     @classmethod
@@ -105,7 +106,7 @@ class CrudMixin:
         if return_deleted:
             result = db.session.execute(query.returning(cls)).scalars().all()
             db.session.commit()
-            return result
+            return result[0] if len(result) > 0 else result
         db.session.execute(query)
         db.session.commit()
         return True

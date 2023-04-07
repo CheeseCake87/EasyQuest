@@ -1,0 +1,10 @@
+{% extends "extends/main.html" %}
+{% block title %}Login{% endblock %}
+
+
+{% block container %}
+    <div class="character-box-flat">
+        <p>A new password has been sent to your email address, be sure to check the span folder!</p>
+        <p><a href="{{ url_for('auth.login') }}">Login</a></p>
+    </div>
+{% endblock %}

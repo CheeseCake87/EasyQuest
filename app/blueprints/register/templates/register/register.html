@@ -4,22 +4,24 @@
 
 
 {% block container %}
-    <form class="form login-form" action="{{ url_for('register.register_post') }}" method="post">
-        <label for="first_name">First Name</label>
-        <input type="text" id="first_name" name="first_name" value="{{ temp_session.get('first_name', '') }}"
-               placeholder="Bob" required>
+    <div class="character-box-flat">
+        <form class="form inputs-100" action="{{ url_for('register.register_post') }}" method="post">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" value="{{ temp_session.get('first_name', '') }}"
+                   placeholder="Bob" required>
 
-        <label for="email_address">Email Address</label>
-        <input type="email" id="email_address" name="email_address" value=""
-               placeholder="your@email.address" required>
+            <label for="email_address">Email Address</label>
+            <input type="email" id="email_address" name="email_address" value=""
+                   placeholder="your@email.address" required>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" value="" placeholder="***********" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" value="" placeholder="***********" required>
 
-        <label for="password_confirm">Confirm Password</label>
-        <input type="password" id="password_confirm" name="password_confirm" value="" placeholder="***********"
-               required>
+            <label for="password_confirm">Confirm Password</label>
+            <input type="password" id="password_confirm" name="password_confirm" value="" placeholder="***********"
+                   required>
 
-        <button type="submit">Register</button>
-    </form>
+            <button type="submit">Register</button>
+        </form>
+    </div>
 {% endblock %}

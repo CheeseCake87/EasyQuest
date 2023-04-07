@@ -1,0 +1,48 @@
+{% extends "extends/main.html" %}
+{% block title %}Quests - {{ q_quest.title }}{% endblock %}
+
+
+{% block container %}
+    <form action="{{ url_for('www.update_quest', quest_id=q_quest.quest_id) }}"
+          method="post"
+          x-data="{genre: '{{ q_quest.fk_genre_id }}', show_delete: false}">
+
+        <div class="action-box mb-1">
+            <div class="button-group">
+                <a href="{{ url_for('www.quests') }}">
+                    <button type="button">< All Quests</button>
+                </a>
+                <button type="submit">Save</button>
+                <button type="button" x-show="!show_delete" @click="show_delete = true">Delete</button>
+                <a x-cloak
+                   x-show="show_delete"
+                   @click.outside="show_delete = false"
+                   href="{{ url_for('www.delete_quest', quest_id=q_quest.quest_id) }}">
+                    <button type="button" class="bg-red">Confirm Delete</button>
+                </a>
+            </div>
+        </div>
+
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" value="{{ q_quest.title }}" required>
+
+        <label for="fk_genre_id">Genre</label>
+        <select name="fk_genre_id" id="fk_genre_id" x-model="genre" required>
+            <option>Select...</option>
+            {% for genre in q_genres %}
+                <option value="{{ genre.genre_id }}">
+                    {{ genre.genre }}
+                </option>
+            {% endfor %}
+        </select>
+
+        {% for genre in q_genres %}
+            <p class="after-input-smalltext" x-show="genre === '{{ genre.genre_id }}'">
+                <small>{{ genre.description }}</small></p>
+        {% endfor %}
+
+        <label for="summary">Summary</label>
+        <textarea name="summary" id="summary" cols="30" rows="5" required>{{ q_quest.summary }}</textarea>
+
+    </form>
+{% endblock %}

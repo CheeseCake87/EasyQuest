@@ -13,8 +13,10 @@ class Quest(db.Model, CrudMixin):
 
     # Data
     title = schema.Column(types.String(256), nullable=False)
-    summary = schema.Column(types.String(256), nullable=False)
+    summary = schema.Column(types.String(256), default='', nullable=True)
     live = schema.Column(types.Boolean, default=False)
+    finished = schema.Column(types.Boolean, default=False)
+    arc_cards = schema.Column(types.JSON, default={}, nullable=True)
 
     # Tracking
     created = schema.Column(types.DateTime, default=dater())
@@ -24,4 +26,10 @@ class Quest(db.Model, CrudMixin):
         "Genre",
         primaryjoin="Genre.genre_id==Quest.fk_genre_id",
         back_populates="rel_quests"
+    )
+
+    rel_characters = relationship(
+        "Character",
+        primaryjoin="Character.fk_quest_id==Quest.quest_id",
+        back_populates="rel_quest"
     )
