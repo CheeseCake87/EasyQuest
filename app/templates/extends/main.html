@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='utilities.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='spacing.css') }}">
+    {% block header %}{% endblock %}
     <script defer src="{{ url_for('static', filename='js/alpine/collapse.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/alpine/alpinejs_3.js') }}"></script>
 </head>

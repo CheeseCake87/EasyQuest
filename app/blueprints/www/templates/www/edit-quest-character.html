@@ -21,27 +21,118 @@
                 <input type="hidden" name="arc_card" x-model="arc_card">
             </div>
 
+            {#            <h2>Choose your Arc Card</h2>#}
+            {#            <div class="quest-group-box">#}
+            {#                {% for arc, values in arc_cards.items() %}#}
+            {#                    <div class="quest-box pb-2" @click="arc_card = '{{ arc }}'"#}
+            {#                         :class="arc_card === '{{ arc }}' ? 'quest-box-active' : ''">#}
+            {#                        <h2 class="mt-1">{{ arc }}</h2>#}
+            {#                        <p>{{ values.description }}</p>#}
+            {#                        <h4>Modifier</h4>#}
+            {#                        <p>{{ values.modifier }}</p>#}
+            {#                        <p>{{ values.bonus }}</p>#}
+            {#                        <h4>Weapon</h4>#}
+            {#                        <p>{{ values.weapon }}</p>#}
+            {#                    </div>#}
+            {#                {% endfor %}#}
+            {#            </div>#}
+
+
             <h2>Choose your Arc Card</h2>
-            <div class="quest-group-box">
+            <div class="character-group-box">
                 {% for arc, values in arc_cards.items() %}
-                    <div class="quest-box pb-2" @click="arc_card = '{{ arc }}'"
-                         :class="arc_card === '{{ arc }}' ? 'quest-box-active' : ''">
-                        <h2 class="mt-1">{{ arc }}</h2>
-                        <p>{{ values.description }}</p>
-                        <h4>Modifier</h4>
-                        <p>{{ values.modifier }}</p>
-                        <p>{{ values.bonus }}</p>
-                        <h4>Weapon</h4>
-                        <p>{{ values.weapon }}</p>
+                    <div class="character-box pb-2" @click="arc_card = '{{ arc }}'"
+                         :class="arc_card === '{{ arc }}' ? 'character-box-active' : ''">
+
+                        <div>
+                            <h2 class="mt-1">{{ arc }}</h2>
+                            <p>{{ values.arc_description }}</p>
+                            <h4>Modifier</h4>
+                            <p>{{ values.arc_modifier }}</p>
+                            <p>{{ values.arc_bonus }}</p>
+                        </div>
+
+                        <div>
+                            <div class="char-stat-group">
+                                <div class="char-stat">
+                                    <p>Weapon</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/weapon.svg') }}"
+                                         alt="Weapon">
+                                    <p><strong>{{ values.weapon }}</strong></p>
+                                </div>
+
+                                <div class="char-stat">
+                                    <p>Health</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/health.svg') }}"
+                                         alt="Health">
+                                    <p><strong>{{ values.health }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Attack</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/attack.svg') }}"
+                                         alt="Attack">
+                                    <p><strong>{{ values.attack }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Defense</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/defense.svg') }}"
+                                         alt="Defense">
+                                    <p><strong>{{ values.defense }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Strength</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/strength.svg') }}"
+                                         alt="Strength">
+                                    <p><strong>{{ values.strength }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Agility</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/agility.svg') }}"
+                                         alt="Agility">
+                                    <p><strong>{{ values.agility }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Intelligence</p>
+                                    <img class="char-icon"
+                                         src="{{ url_for('static', filename='icons/intelligence.svg') }}"
+                                         alt="Intelligence">
+                                    <p><strong>{{ values.intelligence }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Luck</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/luck.svg') }}"
+                                         alt="Luck">
+                                    <p><strong>{{ values.luck }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Perception</p>
+                                    <img class="char-icon"
+                                         src="{{ url_for('static', filename='icons/perception.svg') }}"
+                                         alt="Perception">
+                                    <p><strong>{{ values.perception }}</strong></p>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Persuasion</p>
+                                    <img class="char-icon"
+                                         src="{{ url_for('static', filename='icons/persuasion.svg') }}"
+                                         alt="Persuasion">
+                                    <p><strong>{{ values.persuasion }}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 {% endfor %}
             </div>
+
+
             <h2>Write your back story</h2>
             <textarea name="back_story" id="back_story" rows="15"
                       placeholder="Who your character is, why they are who they are, what they value...">{{ q_character.back_story }}</textarea>
             <button type="submit" class="w-100 mt-2 mb-2 pt-2 pb-2">Update Character</button>
             <div class="action-box" x-data="{show_delete: false}">
-                <button type="button" x-show="!show_delete" @click="show_delete = true" class="w-100">Delete Character</button>
+                <button type="button" x-show="!show_delete" @click="show_delete = true" class="w-100">Delete Character
+                </button>
                 <a x-cloak
                    x-show="show_delete"
                    @click.outside="show_delete = false"

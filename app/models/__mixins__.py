@@ -1,5 +1,5 @@
 from . import db
-from . import insert, update, delete, select
+from . import insert, update, delete, select, asc, desc
 
 
 class CrudMixin:
@@ -8,19 +8,35 @@ class CrudMixin:
     @classmethod
     def create(
             cls,
-            fields: dict = None,
-            batch: list[dict] = None
+            values: dict = None,
+            batch: list[dict] = None,
+            wash_attributes: bool = False,
     ):
+
         if batch is not None:
+            new_batch = []
+            if wash_attributes:
+                for item in batch:
+                    for key, value in item.items():
+                        if not hasattr(cls, key):
+                            del item[key]
+                    new_batch.append(item)
+
+            process_batch = batch if not wash_attributes else new_batch
             result = db.session.scalars(
                 insert(cls).returning(cls),
-                batch
+                process_batch
             )
             db.session.commit()
             return result.all()
 
+        if wash_attributes:
+            for key, value in values.items():
+                if not hasattr(cls, key):
+                    del values[key]
+
         result = db.session.scalar(
-            insert(cls).returning(cls).values(**fields)
+            insert(cls).returning(cls).values(**values)
         )
         db.session.commit()
         return result
@@ -33,6 +49,7 @@ class CrudMixin:
             fields: dict = None,
             all_rows: bool = False,
             order_by: str = None,
+            order_desc: bool = False,
             _updating: bool = False,
             _deleting: bool = False,
             _auto_output: bool = True
@@ -44,7 +61,10 @@ class CrudMixin:
         else:
             if order_by is not None:
                 column = getattr(cls, order_by)
-                base_query = select(cls).order_by(column)
+                if order_desc:
+                    base_query = select(cls).order_by(desc(column))
+                else:
+                    base_query = select(cls).order_by(asc(column))
             else:
                 base_query = select(cls)
 
@@ -84,7 +104,12 @@ class CrudMixin:
             field: tuple = None,
             fields: dict = None,
             return_updated: bool = False,
+            wash_attributes: bool = False
     ):
+        if wash_attributes:
+            for key, value in values.items():
+                if not hasattr(cls, key):
+                    del values[key]
         query = cls.read(id_=id_, field=field, fields=fields, _updating=True).values(values)
         if return_updated:
             result = db.session.execute(query.returning(cls)).scalars().all()

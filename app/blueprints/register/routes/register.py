@@ -37,7 +37,7 @@ def register_post():
     password = auth.sha_password(password, salt)
     passport = auth.generate_numeric_validator(6)
 
-    user = User.create(fields={
+    user = User.create(values={
         'first_name': first_name,
         'email_address': email_address,
         'password': password,

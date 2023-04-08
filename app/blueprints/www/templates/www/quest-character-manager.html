@@ -1,0 +1,98 @@
+{% extends "extends/main.html" %}
+{% block title %}Quests - {{ q_quest.title }} - Character Manager{% endblock %}
+
+
+{% block container %}
+    <div x-data="{ show_waiting: false, waiting: {{ waiting_characters|length }} }">
+    <div class="quest-box-flat mt-2 mb-2">
+        <h1>{{ q_quest.title }}</h1>
+        <cite>{{ q_quest.rel_genre.genre }}</cite>
+        <p>{{ q_quest.summary }}</p>
+    </div>
+
+    {% if approved_characters %}
+        {% for character in approved_characters %}
+            <div class="character-box-flat mb-1"
+                 x-data="{
+                     sleeping: {{ character.sleeping|lower }},
+                     confused: {{ character.confused|lower }},
+                     poisoned: {{ character.poisoned|lower }},
+                     buffed: {{ character.buffed|lower }},
+                 }">
+                <form action="{{ url_for('www.update_character_stats', quest_id=q_quest.quest_id, character_id=character.character_id) }}"
+                      method="post" class="form inputs-100">
+                    <h3 class="mt-1">{{ character.full_name }}</h3>
+                    <p class="mb-1">Arc: {{ character.arc }}</p>
+                    <p class="mb-1">Back Story</p>
+                    <p class="mb-2">{{ character.back_story }}</p>
+                    <div class="character-box-quest">
+                        <div class="character-box-flat">
+                            <label for="health">Health ( {{ character.arc_card.get('health') }} )</label>
+                            <input type="text" id="health" name="health" value="{{ character.health }}">
+                            <label for="weapon">Weapon</label>
+                            <input type="text" id="weapon" name="weapon" value="{{ character.weapon }}">
+                            <label for="attack">Attack</label>
+                            <input type="text" id="attack" name="attack" value="{{ character.attack }}">
+                            <label for="defense">Defense</label>
+                            <input type="text" id="defense" name="defense" value="{{ character.defense }}">
+                        </div>
+                        <div class="character-box-flat inputs-100">
+
+                            <button type="button" class="w-100 mb-2"
+                                    :class="sleeping ? 'bg-green' : ''" @click="sleeping = !sleeping">
+                                Sleeping
+                            </button>
+
+                            <button type="button" class="w-100 mb-2"
+                                    :class="confused ? 'bg-green' : ''" @click="confused = !confused">
+                                Confused
+                            </button>
+
+                            <button type="button" class="w-100 mb-2"
+                                    :class="poisoned ? 'bg-green' : ''" @click="poisoned = !poisoned">
+                                Poisoned
+                            </button>
+
+                            <button type="button" class="w-100 mb-2"
+                                    :class="buffed ? 'bg-green' : ''" @click="buffed = !buffed">
+                                Buffed
+                            </button>
+
+                            <input type="hidden" name="sleeping" x-model="sleeping">
+                            <input type="hidden" name="confused" x-model="confused">
+                            <input type="hidden" name="poisoned" x-model="poisoned">
+                            <input type="hidden" name="buffed" x-model="buffed">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-100 mt-1 bg-green">Save</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="character-box-flat mb-1">
+            <p>No characters in the approved list.</p>
+        </div>
+    {% endif %}
+
+    <button class="w-100 mt-1 mb-1 bg-blue"
+            @click="show_waiting = ! show_waiting">Waiting List (<span x-text="waiting"></span>)
+    </button>
+
+    <div x-show="show_waiting" class="mb-2" x-cloak>
+        {% if waiting_characters %}
+            {% for character in waiting_characters %}
+                <div class="character-box-flat mb-1">
+                    <h3 class="mt-1">{{ character.full_name }}</h3>
+                    <p class="mb-1">Arc: {{ character.arc }}</p>
+                    <a href="{{ url_for('www.approve_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
+                        <button class="w-100 mt-1">Approve</button>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="character-box-flat mb-1">
+                <p>No characters in the waiting list.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

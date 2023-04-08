@@ -2,6 +2,7 @@ import json
 
 from flask import render_template, request, redirect, url_for, flash, session
 
+from app.models import dater
 from app.models.character import Character
 from app.models.genre import Genre
 from app.models.quest import Quest
@@ -19,7 +20,7 @@ def quest(quest_id):
     character = Character.read(
         fields={
             "fk_quest_id": quest_id,
-            "fk_user_id": session.get("user_id")
+            "fk_user_id": session.get("user_id"),
         }
     )
 
@@ -27,6 +28,36 @@ def quest(quest_id):
         bp.tmpl("quest.html"),
         q_quest=q_quest,
         character=None if not character else character[0]
+    )
+
+
+@bp.get("/quest/<quest_id>/character-manager")
+def quest_character_manager(quest_id):
+    q_quest = Quest.read(id_=quest_id)
+
+    if not q_quest:
+        flash("Quest not found", "bad")
+        return redirect(url_for("www.quests"))
+
+    waiting_characters = Character.read(
+        fields={
+            "fk_quest_id": quest_id,
+            "approved": False,
+        }
+    )
+
+    approved_characters = Character.read(
+        fields={
+            "fk_quest_id": quest_id,
+            "approved": True,
+        }
+    )
+
+    return render_template(
+        bp.tmpl("quest-character-manager.html"),
+        q_quest=q_quest,
+        waiting_characters=waiting_characters,
+        approved_characters=approved_characters,
     )
 
 
@@ -87,6 +118,7 @@ def add_quest():
             "title": title,
             "fk_genre_id": fk_genre_id,
             "live": False,
+            "created": dater(),
         }
     )
 

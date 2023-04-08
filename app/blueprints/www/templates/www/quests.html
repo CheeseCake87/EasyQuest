@@ -40,54 +40,7 @@
             </div>
         </form>
     </div>
-
-    <div class="desktop">
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Status</th>
-                <th>&nbsp;</th>
-            </tr>
-            {% if q_quests %}
-                {% for quest in q_quests %}
-                    <tr>
-                        <td>{{ quest.title }}</td>
-                        <td>{{ quest.rel_genre.genre }}</td>
-                        <td>
-                            {% if not quest.finished %}
-                                {{ 'Live' if quest.live else 'Under Construction' }}
-                            {% else %}
-                                Finished
-                            {% endif %}
-                        </td>
-                        <td style="text-align: right">
-                            {% if quest.finished %}
-                                -
-                            {% else %}
-                                {% if session.get('user_type') == 10 or quest.live %}
-                                    <a class="button-link"
-                                       href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">View</a>
-                                {% else %}
-                                    <a class="disabled-link">View</a>
-                                {% endif %}
-                                {% if session.get('user_type') == 10 %}
-                                    <a class="button-link"
-                                       href="{{ url_for('www.edit_quest', quest_id=quest.quest_id) }}">Edit</a>
-                                {% endif %}
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="4" style="text-align: center">No quests yet!
-                </tr>
-            {% endif %}
-        </table>
-    </div>
-
-    <div class="mobile">
+    <div>
         {% if q_quests %}
             {% for quest in q_quests %}
                 <div class="character-box-flat mb-1">
@@ -105,10 +58,17 @@
 
                     {% if quest.live %}
                         <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">
-                            <button class="w-100 mt-1">View</button>
+                            <button class="w-100 mt-1">Enter Quest</button>
                         </a>
+
+                        {% if session.get('user_type') == 10 %}
+                            <a href="{{ url_for('www.quest_character_manager', quest_id=quest.quest_id) }}">
+                                <button class="w-100 mt-1">Character Manager</button>
+                            </a>
+                        {% endif %}
+
                     {% else %}
-                        <button class="w-100 mt-1" disabled>View</button>
+                        <button class="w-100 mt-1" disabled>Enter Quest</button>
                     {% endif %}
 
                     {% if session.get('user_type') == 10 %}

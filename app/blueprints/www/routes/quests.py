@@ -7,7 +7,7 @@ from .. import bp
 
 @bp.route("/quests", methods=["GET"])
 def quests():
-    q_quests = Quest.read(all_rows=True, order_by="created")
+    q_quests = Quest.read(all_rows=True, order_by="created", order_desc=True)
     q_genres = Genre.read(all_rows=True, order_by="created")
 
     return render_template(

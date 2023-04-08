@@ -3,35 +3,40 @@
 
 
 {% block container %}
-    <h2 style="text-align: center">Select a quest</h2>
+    <h2 class="mt-4 mb-4" style="text-align: center">Select a quest</h2>
     <div class="quest-group-box" x-data>
-        {% for quest in q_quests %}
-            {% if quest.quest_id in existing_characters %}
-                <div class="quest-box-flat">
-                    <h1>{{ quest.title }}</h1>
-                    <cite>{{ quest.rel_genre.genre }}</cite>
-                    <p>{{ quest.summary }}</p>
-                    <div class="action-box">
-                        <p class="mt-0 mb-1"><small>You already have a character for this quest.</small></p>
-
-                        <a href="{{ url_for('www.edit_quest_character', quest_id=quest.quest_id, character_id=existing_characters[quest.quest_id]) }}">
-                            <button class="w-100">Edit Character</button>
-                        </a>
+        {% if q_quests %}
+            {% for quest in q_quests %}
+                {% if quest.quest_id in existing_characters %}
+                    <div class="quest-box-flat">
+                        <h1>{{ quest.title }}</h1>
+                        <cite>{{ quest.rel_genre.genre }}</cite>
+                        <p class="mb-3">{{ quest.summary }}</p>
+                        <div class="action-box">
+                            <p class="mt-0 mb-1"><small>You already have a character for this quest.</small></p>
+                            <a href="{{ url_for('www.edit_quest_character', quest_id=quest.quest_id, character_id=existing_characters[quest.quest_id]) }}">
+                                <button class="w-100">Edit Character</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            {% else %}
-                <div class="quest-box">
-                    <h1>{{ quest.title }}</h1>
-                    <cite>{{ quest.rel_genre.genre }}</cite>
-                    <p>{{ quest.summary }}</p>
-                    <div class="action-box">
-
-                        <a href="{{ url_for("www.create_quest_character", quest_id=quest.quest_id ) }}">
-                            <button class="w-100">Create Character</button>
-                        </a>
+                {% else %}
+                    <div class="quest-box">
+                        <h1>{{ quest.title }}</h1>
+                        <cite>{{ quest.rel_genre.genre }}</cite>
+                        <p class="mb-3">{{ quest.summary }}</p>
+                        <div class="action-box">
+                            <a href="{{ url_for("www.create_quest_character", quest_id=quest.quest_id ) }}">
+                                <button class="w-100">Create Character</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+                {% endif %}
+            {% endfor %}
+
+        {% else %}
+            <div class="quest-box-flat">
+                <p style="text-align: center">There are no live quests available.</p>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

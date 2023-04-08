@@ -3,59 +3,58 @@
 
 
 {% block container %}
-    <div class="desktop">
-        <table>
-            <tr>
-                <th>Full Name</th>
-                <th>Quest</th>
-                <th>Arc</th>
-                <th>&nbsp;</th>
-            </tr>
-            {% if q_characters %}
-                {% for character in q_characters %}
-                    <tr>
-                        <td>{{ character.full_name }}</td>
-                        <td>{{ character.rel_quest.title }}</td>
-                        <td>{{ character.arc }}</td>
-                        <td style="text-align: right">
-                            <a class="button-link"
-                               href="{{ url_for('www.quest', quest_id=character.fk_quest_id, character_id=character.character_id) }}">Open
-                                Quest</a>
-                            <a class="button-link"
-                               href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">Edit</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="4">You have no characters, <a href="{{ url_for('www.create_character') }}">
-                        create one</a>.
-                    </td>
-                </tr>
-            {% endif %}
-        </table>
-    </div>
-    <div class="mobile">
-        {% if q_characters %}
-            {% for character in q_characters %}
-                <div class="character-box-flat mb-1">
-                    <h3 class="mt-1">{{ character.full_name }}</h3>
-                    <p class="mb-1">Quest: {{ character.rel_quest.title }}</p>
-                    <p class="mb-1">Arc: {{ character.arc }}</p>
-                    <a href="{{ url_for('www.quest', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
-                        <button class="w-100 mt-1">Open Quest</button>
-                    </a>
-                    <a href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
-                        <button class="w-100 mt-1">Edit</button>
-                    </a>
-                </div>
-            {% endfor %}
-        {% else %}
+{#    #}
+{#    <div class="desktop">#}
+{#        <table>#}
+{#            <tr>#}
+{#                <th>Full Name</th>#}
+{#                <th>Quest</th>#}
+{#                <th>Arc</th>#}
+{#                <th>&nbsp;</th>#}
+{#            </tr>#}
+{#            {% if q_characters %}#}
+{#                {% for character in q_characters %}#}
+{#                    <tr>#}
+{#                        <td>{{ character.full_name }}</td>#}
+{#                        <td>{{ character.rel_quest.title }}</td>#}
+{#                        <td>{{ character.arc }}</td>#}
+{#                        <td style="text-align: right">#}
+{#                            <a class="button-link"#}
+{#                               href="{{ url_for('www.quest', quest_id=character.fk_quest_id, character_id=character.character_id) }}">Open#}
+{#                                Quest</a>#}
+{#                            <a class="button-link"#}
+{#                               href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">Edit</a>#}
+{#                        </td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            {% else %}#}
+{#                <tr>#}
+{#                    <td colspan="4">You have no characters, <a href="{{ url_for('www.create_character') }}">#}
+{#                        create one</a>.#}
+{#                    </td>#}
+{#                </tr>#}
+{#            {% endif %}#}
+{#        </table>#}
+{#    </div>#}
+    {% if q_characters %}
+        {% for character in q_characters %}
             <div class="character-box-flat mb-1">
-                <p>You have no characters, <a href="{{ url_for('www.create_character') }}">
-                    create one</a>.</p>
+                <h3 class="mt-1">{{ character.full_name }}</h3>
+                <p class="mb-1">Quest: {{ character.rel_quest.title }}</p>
+                <p class="mb-1">Arc: {{ character.arc }}</p>
+                <a href="{{ url_for('www.quest', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
+                    <button class="w-100 mt-1">Open Quest</button>
+                </a>
+                <a href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
+                    <button class="w-100 mt-1">Edit</button>
+                </a>
             </div>
-        {% endif %}
-    </div>
+        {% endfor %}
+    {% else %}
+        <div class="character-box-flat mb-1">
+            <p>You have no characters, <a href="{{ url_for('www.create_character') }}">
+                create one</a>.</p>
+        </div>
+    {% endif %}
 
 {% endblock %}

@@ -6,38 +6,54 @@
     </div>
 
 
-
     <nav>
         <ul>
             {% if session.get("authenticated", False) %}
-                <li><a
-                        href="{{ url_for('www.create_character') }}"
-                        {{ active_class if 'create-character' in request.url }}>Create Character</a></li>
-                <li><a
-                        href="{{ url_for('www.your_characters') }}"
-                        {{ active_class if 'your-character' in request.url or 'edit-character' in request.url }}>
-                    Your Characters</a></li>
-                <li><a
-                        href="{{ url_for('www.quests') }}"
-                        {{ active_class if 'quest' in request.url }}>Quests</a></li>
-                {% if session.get('user_type', 0) == 10 %}
-                    <li><a
-                            href="{{ url_for('www.genres') }}"
-                            {{ active_class if 'genre' in request.url }}>Genres</a></li>
-                    <li><a
-                            href="{{ url_for('www.users') }}"
-                            {{ active_class if 'user' in request.url }}>Users</a></li>
-                {% endif %}
-                <li><a
-                        href="{{ url_for('auth.logout') }}">Logout</a></li>
-            {% else %}
                 <li>
-                    <a href="{{ url_for('auth.login') }}" {{ active_class if 'login' in request.url }}
-                    >Login</a>
+                    <a href="{{ url_for('www.quests') }}" {{ active_class if 'quest' in request.url }}>
+                        Quests
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('www.your_characters') }}" {{ active_class if 'your-character' in request.url or 'edit-character' in request.url }}>
+                        Your Characters
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ url_for('register.register') }}" {{ active_class if 'register' in request.url }}
-                    >Register</a>
+                    <a href="{{ url_for('www.create_character') }}" {{ active_class if 'create-character' in request.url }}>
+                        Create Character
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('www.genres') }}" {{ active_class if 'genre' in request.url }}>
+                        Genres
+                    </a>
+                </li>
+
+                {% if session.get('user_type', 0) == 10 %}
+
+                    <li>
+                        <a href="{{ url_for('www.users') }}" {{ active_class if 'user' in request.url }}>
+                            Users
+                        </a>
+                    </li>
+
+                {% endif %}
+                <li>
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ url_for('auth.login') }}" {{ active_class if 'login' in request.url }}>
+                        Login
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('register.register') }}" {{ active_class if 'register' in request.url }}>
+                        Register
+                    </a>
                 </li>
             {% endif %}
         </ul>

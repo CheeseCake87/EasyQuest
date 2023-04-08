@@ -1,3 +1,6 @@
+import os
+
+
 def first_run(db, bigapp, auth):
     db.drop_all()
     db.create_all()
@@ -15,15 +18,15 @@ def first_run(db, bigapp, auth):
         ]
     )
 
-    default_admin_email_address = "admin@sys.tem"
-    default_admin_password = "password"
+    default_admin_email_address = os.environ.get("ADMIN_ACCOUNT", "admin@localhost")
+    default_admin_password = os.environ.get("ADMIN_PASSWORD", "password")
     passport = auth.generate_numeric_validator(6)
     salt = auth.generate_salt()
     password = auth.sha_password(default_admin_password, salt)
 
     bigapp.model("User").create(
-        fields={
-            "first_name": "Admin",
+        values={
+            "first_name": "Quest Admin",
             "email_address": default_admin_email_address,
             "password": password,
             "salt": salt,

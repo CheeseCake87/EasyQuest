@@ -2,6 +2,10 @@
 {% block title %}Quests - {{ q_quest.title }}{% endblock %}
 
 
+{% block header %}
+    <script defer src="{{ url_for('static', filename='js/alpine:data:live_quest.js') }}"></script>
+{% endblock %}
+
 {% block container %}
     <div class="quest-box-flat mt-2 mb-2">
         <h1>{{ q_quest.title }}</h1>
@@ -10,19 +14,114 @@
     </div>
 
     {% if character %}
-        <h1>Your Character</h1>
-        <h2>{{ character.full_name }}</h2>
+        <h3 class="mb-0" style="font-style: italic">Character</h3>
+        <h1 class="mt-0">{{ character.full_name }}</h1>
         <p class="mb-0"><cite>{{ character.arc }}</cite></p>
-        <p class="mt-0"><small><cite>{{ character.arc_card.get('description') }}</cite></small></p>
+        <p class="mt-0"><small><cite>{{ character.arc_description }}</cite></small></p>
 
-        <div class="quest-group-box mt-4">
-            <div class="character-box-flat">
-                <h3 class="mt-1">Modifier</h3>
-                <p>{{ character.arc_card.get('modifier') }}</p>
+        <div class="character-box-quest mt-4"
+             x-data="live_quest"
+             x-init="
+             poll_stats('{{ url_for("www.character_stats", character_id=character.character_id) }}');
+             setInterval(() => {
+             poll_stats('{{ url_for("www.character_stats", character_id=character.character_id) }}');
+             }, 1000)">
+            <div class="char-stat-group">
+                <div>
+                    <h3 class="mt-1">Modifier</h3>
+                    <p>{{ character.arc_modifier }}</p>
+                    <h3 class="mt-1">Bonus</h3>
+                    <p>{{ character.arc_bonus }}</p>
+                </div>
+                <h3 class="mt-1">Effects</h3>
+                <div class="char-effects">
+
+                    <img class="large-char-icon"
+                         :class="sleeping ? 'large-char-icon-active' : 'large-char-icon-inactive'"
+                         src="{{ url_for('static', filename='icons/sleeping.svg') }}"
+                         alt="Sleeping">
+
+                    <img class="large-char-icon"
+                         :class="confused ? 'large-char-icon-active' : 'large-char-icon-inactive'"
+                         src="{{ url_for('static', filename='icons/confused.svg') }}"
+                         alt="confused">
+
+                    <img class="large-char-icon"
+                         :class="poisoned ? 'large-char-icon-active' : 'large-char-icon-inactive'"
+                         src="{{ url_for('static', filename='icons/poisoned.svg') }}"
+                         alt="poisoned">
+
+                    <img class="large-char-icon"
+                         :class="buffed ? 'large-char-icon-active' : 'large-char-icon-inactive'"
+                         src="{{ url_for('static', filename='icons/buffed.svg') }}"
+                         alt="buffed">
+
+                </div>
             </div>
-            <div class="character-box-flat">
-                <h3 class="mt-1">Bonus</h3>
-                <p>{{ character.arc_card.get('bonus') }}</p>
+            <div class="char-stat-group">
+                <div class="char-stat">
+                    <p>Weapon</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/weapon.svg') }}"
+                         alt="Weapon">
+                    <p><strong x-text="weapon"></strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Health</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/health.svg') }}"
+                         alt="Health">
+                    <p><strong x-text="health"></strong> / <strong>{{ character.arc_card.get('health') }}</strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Attack</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/attack.svg') }}"
+                         alt="Attack">
+                    <p><strong x-text="attack"></strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Defense</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/defense.svg') }}"
+                         alt="Defense">
+                    <p><strong x-text="defence"></strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Strength</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/strength.svg') }}"
+                         alt="Strength">
+                    <p><strong>{{ character.strength }}</strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Agility</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/agility.svg') }}"
+                         alt="Agility">
+                    <p><strong>{{ character.agility }}</strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Intelligence</p>
+                    <img class="char-icon"
+                         src="{{ url_for('static', filename='icons/intelligence.svg') }}"
+                         alt="Intelligence">
+                    <p><strong>{{ character.intelligence }}</strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Luck</p>
+                    <img class="char-icon" src="{{ url_for('static', filename='icons/luck.svg') }}"
+                         alt="Luck">
+                    <p><strong>{{ character.luck }}</strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Perception</p>
+                    <img class="char-icon"
+                         src="{{ url_for('static', filename='icons/perception.svg') }}"
+                         alt="Perception">
+                    <p><strong>{{ character.perception }}</strong></p>
+                </div>
+                <div class="char-stat">
+                    <p>Persuasion</p>
+                    <img class="char-icon"
+                         src="{{ url_for('static', filename='icons/persuasion.svg') }}"
+                         alt="Persuasion">
+                    <p><strong>{{ character.persuasion }}</strong></p>
+                </div>
             </div>
         </div>
 
@@ -30,10 +129,10 @@
         <p>{{ character.arc_card.get('back_story') }}</p>
 
     {% else %}
-        <div class="action-box">
-            <a href="{{ url_for("www.create_quest_character", quest_id=q_quest.quest_id ) }}">
-                <button class="w-100">Create Character</button>
-            </a>
+        <div class="character-box-flat mb-1">
+            <p>You have no characters in this quest,
+                <a href="{{ url_for("www.create_quest_character", quest_id=q_quest.quest_id ) }}">
+                    create one</a>.</p>
         </div>
     {% endif %}
 

@@ -2,7 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 
 from pytz import timezone
-from sqlalchemy import schema, types, select, update, insert, delete
+from sqlalchemy import schema, types, select, update, insert, delete, desc, asc
 from sqlalchemy.orm import relationship
 
 from app.extensions import db
@@ -23,4 +23,17 @@ def forkey(table_dot_field: str) -> schema.Column:
     return schema.Column(types.Integer, schema.ForeignKey(table_dot_field), nullable=False)
 
 
-__all__ = ["db", "dater", "forkey", "schema", "types", "select", "update", "insert", "delete", "relationship"]
+__all__ = [
+    "db",
+    "dater",
+    "forkey",
+    "schema",
+    "types",
+    "select",
+    "update",
+    "insert",
+    "delete",
+    "relationship",
+    "desc",
+    "asc"
+]
