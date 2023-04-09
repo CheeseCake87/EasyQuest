@@ -3,7 +3,7 @@ import os
 from flask import render_template, redirect, url_for, session, request, flash
 from flask_bigapp.security import login_check
 
-from app.extensions import bigapp, security, auth
+from app.extensions import bigapp, auth
 from app.globals.email import send_email
 from app.models.user import User
 from .. import bp
