@@ -5,7 +5,7 @@
 [flask]
 APP_NAME = "easyquest"
 VERSION = "1.0.0"
-SECRET_KEY = "J3UsrFgrYfryeRdmYM5WMeCZM8tRWcmpsRRfqsx5m4ZbEFAfmDYmVyqDeWdrFEXVPpKAE6VBZfJTmvqB"
+SECRET_KEY = "<EASYQUEST_SECRET_KEY>"
 DEBUG = false
 TESTING = false
 SESSION_TIME = 480
@@ -20,12 +20,12 @@ RESET_DB = true
 [database]
 [database.main]
 enabled = true
-type = "sqlite"
-database_name = "database"
-location = "db"
-port = ""
-username = "user"
-password = "password"
+type = "postgresql"
+location = "<DB_LOCATION>"
+port = "<DB_PORT>"
+database_name = "<DB_NAME>"
+username = "<DB_USERNAME>"
+password = "<DB_PASSWORD>"
 
 [session]
 user_id = 0

@@ -33,8 +33,8 @@
                             <input type="text" id="weapon" name="weapon" value="{{ character.weapon }}">
                             <label for="attack">Attack</label>
                             <input type="text" id="attack" name="attack" value="{{ character.attack }}">
-                            <label for="defense">Defense</label>
-                            <input type="text" id="defense" name="defense" value="{{ character.defense }}">
+                            <label for="defence">Defence</label>
+                            <input type="text" id="defence" name="defence" value="{{ character.defence }}">
                         </div>
                         <div class="character-box-flat inputs-100">
 
@@ -65,6 +65,18 @@
                         </div>
                     </div>
                     <button type="submit" class="w-100 mt-1 bg-green">Save</button>
+                    {% if not character.locked %}
+                        <a href="{{ url_for('www.lock_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
+                            <button type="button" class="w-100 mt-1">Lock</button>
+                        </a>
+                    {% else %}
+                        <p style="text-align: center" class="mt-1 mb-1">
+                            <a href="{{ url_for('www.unlock_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}"
+                               style="text-align: center">
+                                unlock
+                            </a>
+                        </p>
+                    {% endif %}
                 </form>
             </div>
         {% endfor %}

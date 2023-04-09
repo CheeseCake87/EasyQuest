@@ -14,8 +14,8 @@
                         <p class="mb-3">{{ quest.summary }}</p>
                         <div class="action-box">
                             <p class="mt-0 mb-1"><small>You already have a character for this quest.</small></p>
-                            <a href="{{ url_for('www.edit_quest_character', quest_id=quest.quest_id, character_id=existing_characters[quest.quest_id]) }}">
-                                <button class="w-100">Edit Character</button>
+                            <a href="{{ url_for('www.quest', quest_id=quest.quest_id) }}">
+                                <button class="w-100">Enter Quest</button>
                             </a>
                         </div>
                     </div>

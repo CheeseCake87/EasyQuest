@@ -1,10 +1,10 @@
 from flask import url_for, redirect
+from flask_bigapp.security import login_check
 
-from app.extensions import security
 from .. import bp
 
 
 @bp.route("/", methods=["GET"])
-@security.login_required("auth.login", "authenticated")
+@login_check('authenticated', 'auth.login')
 def index():
     return redirect(url_for("www.quests"))

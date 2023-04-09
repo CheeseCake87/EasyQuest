@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, session
+from flask_bigapp.security import login_check, permission_check
 
 from app.models import dater
 from app.models.character import Character
@@ -7,6 +8,7 @@ from .. import bp
 
 
 @bp.route("/create-character", methods=["GET"])
+@login_check('authenticated', 'auth.login')
 def create_character():
     q_quests = Quest.read(field=('live', True), order_by="created")
     characters = Character.read(field=("fk_user_id", session.get('user_id')))
@@ -23,6 +25,7 @@ def create_character():
 
 
 @bp.route("/create-character/for/<quest_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
 def create_quest_character(quest_id):
     q_quest = Quest.read(id_=quest_id)
     arc_cards = q_quest.arc_cards
@@ -35,6 +38,7 @@ def create_quest_character(quest_id):
 
 
 @bp.route("/edit-character/<character_id>/for/<quest_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
 def edit_quest_character(character_id, quest_id):
     q_quest = Quest.read(id_=quest_id)
     arc_cards = q_quest.arc_cards
@@ -50,11 +54,41 @@ def edit_quest_character(character_id, quest_id):
 
 
 @bp.route("/approve-character/<character_id>/for/<quest_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def approve_quest_character(character_id, quest_id):
     Character.update(
         id_=character_id,
         values={
-            "approved": True
+            "approved": True,
+        }
+    )
+
+    return redirect(url_for("www.quest_character_manager", quest_id=quest_id))
+
+
+@bp.route("/lock-character/<character_id>/for/<quest_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
+def lock_quest_character(character_id, quest_id):
+    Character.update(
+        id_=character_id,
+        values={
+            "locked": True,
+        }
+    )
+
+    return redirect(url_for("www.quest_character_manager", quest_id=quest_id))
+
+
+@bp.route("/unlock-character/<character_id>/for/<quest_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
+def unlock_quest_character(character_id, quest_id):
+    Character.update(
+        id_=character_id,
+        values={
+            "locked": False,
         }
     )
 
@@ -62,6 +96,7 @@ def approve_quest_character(character_id, quest_id):
 
 
 @bp.route("/add-character/to/<quest_id>", methods=["POST"])
+@login_check('authenticated', 'auth.login')
 def add_character_to_quest(quest_id):
     full_name = request.form.get("full_name")
     arc_card_name = request.form.get("arc_card")
@@ -86,6 +121,8 @@ def add_character_to_quest(quest_id):
 
 
 @bp.route("/update-character-stats/<character_id>/to/<quest_id>", methods=["POST"])
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def update_character_stats(character_id, quest_id):
     health = request.form.get("health")
     sleeping = True if request.form.get("sleeping") == 'true' else False
@@ -94,7 +131,7 @@ def update_character_stats(character_id, quest_id):
     buffed = True if request.form.get("buffed") == 'true' else False
     weapon = request.form.get("weapon")
     attack = request.form.get("attack")
-    defense = request.form.get("defense")
+    defence = request.form.get("defence")
 
     Character.update(
         id_=character_id,
@@ -106,7 +143,7 @@ def update_character_stats(character_id, quest_id):
             "buffed": buffed,
             "weapon": weapon,
             "attack": attack,
-            "defense": defense,
+            "defence": defence,
         }
     )
 
@@ -114,6 +151,7 @@ def update_character_stats(character_id, quest_id):
 
 
 @bp.route("/update-character/<character_id>/to/<quest_id>", methods=["POST"])
+@login_check('authenticated', 'auth.login')
 def update_character_to_quest(character_id, quest_id):
     full_name = request.form.get("full_name")
     arc_card_name = request.form.get("arc_card")
@@ -141,6 +179,7 @@ def update_character_to_quest(character_id, quest_id):
 
 
 @bp.route("/delete-character/<character_id>/from/<quest_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
 def delete_character_from_quest(character_id, quest_id):
     Character.delete(id_=character_id)
 
@@ -148,6 +187,7 @@ def delete_character_from_quest(character_id, quest_id):
 
 
 @bp.route("/character/stats/<character_id>", methods=["GET"])
+@login_check('authenticated', 'auth.login')
 def character_stats(character_id):
     character = Character.read(id_=character_id)
 
@@ -155,7 +195,7 @@ def character_stats(character_id):
         return {
             "health": 0,
             "attack": 0,
-            "defense": 0,
+            "defence": 0,
             "weapon": "",
             "sleeping": False,
             "confused": False,
@@ -166,7 +206,7 @@ def character_stats(character_id):
     return {
         "health": character.health,
         "attack": character.attack,
-        "defense": character.defense,
+        "defence": character.defence,
         "weapon": character.weapon,
         "sleeping": character.sleeping,
         "confused": character.confused,

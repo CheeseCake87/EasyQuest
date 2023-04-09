@@ -203,3 +203,15 @@
         width: 100%;
     }
 }
+
+.dice {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d0d0d;
+    color: white;
+    font-size: 200%;
+    border-radius: 10px;
+}

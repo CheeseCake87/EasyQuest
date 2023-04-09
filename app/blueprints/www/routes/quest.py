@@ -1,6 +1,7 @@
 import json
 
 from flask import render_template, request, redirect, url_for, flash, session
+from flask_bigapp.security import login_check, permission_check
 
 from app.models import dater
 from app.models.character import Character
@@ -10,6 +11,7 @@ from .. import bp
 
 
 @bp.get("/quest/<quest_id>")
+@login_check('authenticated', 'auth.login')
 def quest(quest_id):
     q_quest = Quest.read(id_=quest_id)
 
@@ -32,6 +34,8 @@ def quest(quest_id):
 
 
 @bp.get("/quest/<quest_id>/character-manager")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def quest_character_manager(quest_id):
     q_quest = Quest.read(id_=quest_id)
 
@@ -62,6 +66,8 @@ def quest_character_manager(quest_id):
 
 
 @bp.get("/edit/quest/<quest_id>")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def edit_quest(quest_id):
     if session.get("user_type") != 10:
         return redirect(url_for("www.index"))
@@ -82,6 +88,8 @@ def edit_quest(quest_id):
 
 
 @bp.get("/make-pending/quest/<quest_id>")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def quest_pending(quest_id):
     if session.get("user_type") != 10:
         return redirect(url_for("www.index"))
@@ -94,6 +102,8 @@ def quest_pending(quest_id):
 
 
 @bp.get("/make-live/quest/<quest_id>")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def quest_live(quest_id):
     if session.get("user_type") != 10:
         return redirect(url_for("www.index"))
@@ -106,6 +116,8 @@ def quest_live(quest_id):
 
 
 @bp.post("/add/quest")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def add_quest():
     if session.get("user_type") != 10:
         return redirect(url_for("www.index"))
@@ -126,6 +138,8 @@ def add_quest():
 
 
 @bp.post("/update/quest/<quest_id>")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def update_quest(quest_id):
     if session.get("user_type") != 10:
         return redirect(url_for("www.index"))
@@ -152,6 +166,8 @@ def update_quest(quest_id):
 
 
 @bp.get("/delete/quest/<quest_id>")
+@login_check('authenticated', 'auth.login')
+@permission_check('permissions', 'www.index', ['admin'])
 def delete_quest(quest_id):
     if session.get("user_type") != 10:
         return redirect(url_for("www.index"))

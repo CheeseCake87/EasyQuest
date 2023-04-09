@@ -1,0 +1,38 @@
+{
+  "Stoofan": {
+    "weapon": "Witch Stone Sword",
+    "attack": 6,
+    "defence": 4,
+    "health": 600,
+    "strength": 1,
+    "agility": 2,
+    "intelligence": 1,
+    "luck": 0,
+    "perception": 2,
+    "persuasion": 0
+  },
+  "Stufi": {
+    "weapon": "Spoon",
+    "attack": 1,
+    "defence": 0,
+    "health": 100,
+    "strength": 1,
+    "agility": 2,
+    "intelligence": 1,
+    "luck": 0,
+    "perception": 2,
+    "persuasion": 0
+  },
+  "Flem": {
+    "weapon": "Butter Knife",
+    "attack": 1,
+    "defence": 0,
+    "health": 500,
+    "strength": 1,
+    "agility": 2,
+    "intelligence": 1,
+    "luck": 0,
+    "perception": 2,
+    "persuasion": 0
+  }
+}

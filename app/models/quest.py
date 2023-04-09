@@ -13,7 +13,7 @@ class Quest(db.Model, CrudMixin):
 
     # Data
     title = schema.Column(types.String(256), nullable=False)
-    summary = schema.Column(types.String(256), default='', nullable=True)
+    summary = schema.Column(types.String(4000), default='', nullable=True)
     live = schema.Column(types.Boolean, default=False)
     finished = schema.Column(types.Boolean, default=False)
     arc_cards = schema.Column(types.JSON, default={}, nullable=True)

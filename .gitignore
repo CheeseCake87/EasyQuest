@@ -4,7 +4,9 @@ __pycache__/
 *$py.class
 
 # C extensions
-*.so
+*.
+
+.docker-compose-production.yaml
 
 # Distribution / packaging
 .Python
@@ -128,3 +130,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /.ignore/
+/docker-compose-production.yaml

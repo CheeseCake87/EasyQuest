@@ -1,6 +1,7 @@
 import os
 
 from flask import render_template, request, flash, redirect, url_for, session
+from flask_bigapp.security import login_check
 
 from app.extensions import auth
 from app.globals.email import send_email
@@ -9,11 +10,13 @@ from .. import bp
 
 
 @bp.get("/")
+@login_check('authenticated', 'www.index', redirect_on_value=True)
 def register():
     return render_template(bp.tmpl("register.html"))
 
 
 @bp.post("/")
+@login_check('authenticated', 'www.index', redirect_on_value=True)
 def register_post():
     first_name = request.form.get('first_name', None)
     email_address = request.form.get('email_address', None)

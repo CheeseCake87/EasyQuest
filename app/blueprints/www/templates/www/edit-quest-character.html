@@ -54,6 +54,9 @@
 
                         <div>
                             <div class="char-stat-group">
+                                <div>
+                                    <strong>Stats</strong>
+                                </div>
                                 <div class="char-stat">
                                     <p>Weapon</p>
                                     <img class="char-icon" src="{{ url_for('static', filename='icons/weapon.svg') }}"
@@ -74,10 +77,14 @@
                                     <p><strong>{{ values.attack }}</strong></p>
                                 </div>
                                 <div class="char-stat">
-                                    <p>Defense</p>
-                                    <img class="char-icon" src="{{ url_for('static', filename='icons/defense.svg') }}"
-                                         alt="Defense">
-                                    <p><strong>{{ values.defense }}</strong></p>
+                                    <p>Defence</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/defence.svg') }}"
+                                         alt="Defence">
+                                    <p><strong>{{ values.defence }}</strong></p>
+                                </div>
+
+                                <div class="pt-1">
+                                    <strong>Attributes</strong>
                                 </div>
                                 <div class="char-stat">
                                     <p>Strength</p>

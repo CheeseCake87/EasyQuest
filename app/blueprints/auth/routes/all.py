@@ -1,6 +1,7 @@
 import os
 
 from flask import render_template, redirect, url_for, session, request, flash
+from flask_bigapp.security import login_check
 
 from app.extensions import bigapp, security, auth
 from app.globals.email import send_email
@@ -9,17 +10,19 @@ from .. import bp
 
 
 @bp.get("/")
+@login_check('authenticated', 'www.quests', redirect_on_value=True)
 def index():
     return redirect(url_for('auth.login'))
 
 
 @bp.get("/login")
-@security.no_login_required('www.quests', 'authenticated')
+@login_check('authenticated', 'www.quests', redirect_on_value=True)
 def login():
     return render_template(bp.tmpl("login.html"))
 
 
 @bp.post("/login")
+@login_check('authenticated', 'www.quests', redirect_on_value=True)
 def login_post():
     user = User.login(
         email_address=request.form.get('email_address', None),
@@ -44,11 +47,13 @@ def logout():
 
 
 @bp.route("/forgot-password", methods=["GET"])
+@login_check('authenticated', 'www.quests', redirect_on_value=True)
 def forgot_password():
     return redirect(url_for('forgot-password.login'))
 
 
 @bp.route("/send-new-password", methods=["POST"])
+@login_check('authenticated', 'www.quests', redirect_on_value=True)
 def send_new_password():
     email_address = request.form.get('email_address', None)
 
@@ -82,5 +87,6 @@ def send_new_password():
 
 
 @bp.route("/check-your-emails", methods=["GET"])
+@login_check('authenticated', 'www.quests', redirect_on_value=True)
 def check_emails():
     return render_template(bp.tmpl("check-emails.html"))

@@ -1,0 +1,37 @@
+version: "3.8"
+
+volumes:
+  database:
+
+services:
+  app:
+    container_name: easyquest
+    image: cheesecake87/easyquest:v1.0.2
+    ports:
+      - "4006:5000"
+    depends_on:
+      - database
+    environment:
+      BA_CONFIG: docker.config.toml
+      EASYQUEST_SECRET_KEY: Null
+      DB_LOCATION: database
+      DB_PORT: 5432
+      DB_NAME: easydb
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      ADMIN_ACCOUNT: null
+      ADMIN_PASSWORD: null
+      EMAIL_ACCOUNT: null
+      EMAIL_PASSWORD: null
+
+  database:
+    container_name: easyquest-db
+    image: postgres:15.1-alpine3.17
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: easydb
+    volumes:
+      - database:/var/lib/postgresql/data

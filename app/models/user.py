@@ -36,7 +36,7 @@ class User(db.Model, CrudMixin):
     def login(cls, email_address, password):
         if email_address is None or password is None:
             return False
-        user = cls.read(fields={'email_address': email_address}, _auto_output=False).one_or_none()
+        user = cls.read(fields={'email_address': email_address}, _auto_output=False).first()
         if user:
             if auth.auth_password(password, user.password, user.salt):
                 return user

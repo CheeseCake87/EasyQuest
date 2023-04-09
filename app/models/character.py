@@ -18,7 +18,7 @@ class Character(db.Model, CrudMixin):
 
     # Data
     full_name = schema.Column(types.String(256), nullable=False)
-    back_story = schema.Column(types.String(1024), nullable=False)
+    back_story = schema.Column(types.String(4000), nullable=False)
     display_picture = schema.Column(types.String(256), nullable=True)
 
     # Vitals
@@ -38,9 +38,9 @@ class Character(db.Model, CrudMixin):
     # Weapon
     weapon = schema.Column(types.String(256), nullable=True)
 
-    # Attack & Defense
+    # Attack & Defence
     attack = schema.Column(types.Integer, nullable=False, default=1)
-    defense = schema.Column(types.Integer, nullable=False, default=1)
+    defence = schema.Column(types.Integer, nullable=False, default=1)
 
     # Attributes
     strength = schema.Column(types.Integer, nullable=False, default=1)

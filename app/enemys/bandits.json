@@ -1,0 +1,50 @@
+{
+  "1": {
+    "name": "Bandit Boss",
+    "arc_description": "The bandit boss was a towering figure, with broad shoulders and a rugged build. His weather-beaten face was criss-crossed with scars, and his dark eyes glittered with a cold, calculating intelligence. His hair was long and unkempt, framing his face like a wild mane, and his beard was thick and unruly.",
+    "arc_modifier": "Bash attack",
+    "arc_bonus": "Staggers the player for one turn",
+    "weapon": "Sword",
+    "attack": 2,
+    "defence": 3,
+    "health": 150,
+    "strength": 1,
+    "agility": 2,
+    "intelligence": 1,
+    "luck": 0,
+    "perception": 2,
+    "persuasion": 0
+  },
+  "3": {
+    "name": "Bandit",
+    "weapon": "Sword",
+    "arc_description": "A standard bandit.",
+    "arc_modifier": "Throw sand.",
+    "arc_bonus": "Drops players attack by one.",
+    "attack": 2,
+    "defence": 3,
+    "health": 100,
+    "strength": 1,
+    "agility": 2,
+    "intelligence": 1,
+    "luck": 0,
+    "perception": 2,
+    "persuasion": 0
+  },
+  "2": {
+    "name": "Bandit Archer",
+    "weapon": "Bow",
+    "arc_description": "A standard bandit archer.",
+    "arc_modifier": "Bomb",
+    "arc_bonus": "Can throw a bomb, that damages 2 players for 10hp",
+    "attack": 2,
+    "defence": 3,
+    "health": 100,
+    "strength": 1,
+    "agility": 2,
+    "intelligence": 1,
+    "luck": 0,
+    "perception": 2,
+    "persuasion": 0
+  }
+}

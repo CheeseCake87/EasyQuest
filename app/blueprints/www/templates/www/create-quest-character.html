@@ -10,6 +10,30 @@
     </div>
     <div x-data="{arc_card: ''}">
 
+        <div class="character-box-flat mt-2">
+            <img class="char-icon mt-2" src="{{ url_for('static', filename='icons/info.svg') }}"
+                 alt="Info">
+            <strong>How the game works</strong>
+            <p>All actions will be decided with the roll of the six sided dice. </p>
+            <p>Each Arc has its own stats that will dictate the roll you need.</p>
+            <p><strong>Causing damage:</strong> In order to cause damage to an enemy you need to roll more than the
+                enemy's defence points. For example, if an enemy's defence is 2;
+                You will need to roll a 3 or above to cause damage. This damage would be your attack points.
+                1 Attack point = 10hp.</p>
+
+            <p><strong>Scenario checks:</strong> During the quest you will come up against
+                various challenges and scenarios. This is where your attributes will be checked. Attributes work
+                in reverse of the dice roll. For example, if you have a Strength of 1, you minus 1 from 6, and you
+                would need a 5 or above to successfully perform the act of Strength you are attempting.</p>
+            <p>Checks will be made using common sense by the Quest Master.</p>
+
+            <p><strong>The rules of effects</strong></p>
+            <p>Poisoned: This will last until the encounter is over.</p>
+            <p>Sleeping: This will last until you are hit.</p>
+            <p>Confused: This will last 2 turns.</p>
+            <p>Buffed: This will last until the encounter is over.</p>
+        </div>
+
         <form
                 action="{{ url_for('www.add_character_to_quest', quest_id=q_quest.quest_id) }}"
                 method="post"
@@ -33,12 +57,19 @@
                             <h4>Modifier</h4>
                             <p>{{ values.arc_modifier }}</p>
                             <p>{{ values.arc_bonus }}</p>
-                            <h4>Weapon</h4>
-                            <p>{{ values.weapon }}</p>
                         </div>
 
                         <div>
                             <div class="char-stat-group">
+                                <div>
+                                    <strong>Stats</strong>
+                                </div>
+                                <div class="char-stat">
+                                    <p>Weapon</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/weapon.svg') }}"
+                                         alt="Weapon">
+                                    <p><strong>{{ values.weapon }}</strong></p>
+                                </div>
                                 <div class="char-stat">
                                     <p>Health</p>
                                     <img class="char-icon" src="{{ url_for('static', filename='icons/health.svg') }}"
@@ -52,10 +83,13 @@
                                     <p><strong>{{ values.attack }}</strong></p>
                                 </div>
                                 <div class="char-stat">
-                                    <p>Defense</p>
-                                    <img class="char-icon" src="{{ url_for('static', filename='icons/defense.svg') }}"
-                                         alt="Defense">
-                                    <p><strong>{{ values.defense }}</strong></p>
+                                    <p>Defence</p>
+                                    <img class="char-icon" src="{{ url_for('static', filename='icons/defence.svg') }}"
+                                         alt="Defence">
+                                    <p><strong>{{ values.defence }}</strong></p>
+                                </div>
+                                <div class="pt-1">
+                                    <strong>Attributes</strong>
                                 </div>
                                 <div class="char-stat">
                                     <p>Strength</p>

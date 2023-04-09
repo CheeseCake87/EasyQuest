@@ -3,39 +3,6 @@
 
 
 {% block container %}
-{#    #}
-{#    <div class="desktop">#}
-{#        <table>#}
-{#            <tr>#}
-{#                <th>Full Name</th>#}
-{#                <th>Quest</th>#}
-{#                <th>Arc</th>#}
-{#                <th>&nbsp;</th>#}
-{#            </tr>#}
-{#            {% if q_characters %}#}
-{#                {% for character in q_characters %}#}
-{#                    <tr>#}
-{#                        <td>{{ character.full_name }}</td>#}
-{#                        <td>{{ character.rel_quest.title }}</td>#}
-{#                        <td>{{ character.arc }}</td>#}
-{#                        <td style="text-align: right">#}
-{#                            <a class="button-link"#}
-{#                               href="{{ url_for('www.quest', quest_id=character.fk_quest_id, character_id=character.character_id) }}">Open#}
-{#                                Quest</a>#}
-{#                            <a class="button-link"#}
-{#                               href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">Edit</a>#}
-{#                        </td>#}
-{#                    </tr>#}
-{#                {% endfor %}#}
-{#            {% else %}#}
-{#                <tr>#}
-{#                    <td colspan="4">You have no characters, <a href="{{ url_for('www.create_character') }}">#}
-{#                        create one</a>.#}
-{#                    </td>#}
-{#                </tr>#}
-{#            {% endif %}#}
-{#        </table>#}
-{#    </div>#}
     {% if q_characters %}
         {% for character in q_characters %}
             <div class="character-box-flat mb-1">
@@ -45,9 +12,13 @@
                 <a href="{{ url_for('www.quest', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
                     <button class="w-100 mt-1">Open Quest</button>
                 </a>
-                <a href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
-                    <button class="w-100 mt-1">Edit</button>
-                </a>
+                {% if character.locked %}
+                    <button class="w-100 mt-1" disabled>Edit ( Character is locked )</button>
+                {% else %}
+                    <a href="{{ url_for('www.edit_quest_character', quest_id=character.fk_quest_id, character_id=character.character_id) }}">
+                        <button class="w-100 mt-1">Edit</button>
+                    </a>
+                {% endif %}
             </div>
         {% endfor %}
     {% else %}
