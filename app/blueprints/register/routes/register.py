@@ -52,6 +52,8 @@ def register_post():
     session['user_id'] = user.user_id
     session['passport'] = user.passport
     session['authenticated'] = True
+    session['user_type'] = user.user_type
+    session['permissions'] = [user.user_type]
 
     email_body = f"""
         <p>Hello,</p>

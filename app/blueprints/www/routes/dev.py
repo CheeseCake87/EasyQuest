@@ -7,7 +7,7 @@ from .. import bp
 
 @bp.route("/database", methods=["GET"])
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def database():
     db.drop_all()
     db.create_all()

@@ -7,21 +7,15 @@ from .. import bp
 
 @bp.get("/enable/user/<user_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def enable_user(user_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     User.enable(user_id)
     return redirect(url_for('www.users'))
 
 
 @bp.get("/disable/user/<user_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def disable_user(user_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     User.disable(user_id)
     return redirect(url_for('www.users'))

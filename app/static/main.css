@@ -204,6 +204,15 @@
     }
 }
 
+.dice-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 5px;
+}
+
 .dice {
     width: 100px;
     height: 100px;

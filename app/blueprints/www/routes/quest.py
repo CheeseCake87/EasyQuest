@@ -35,7 +35,7 @@ def quest(quest_id):
 
 @bp.get("/quest/<quest_id>/character-manager")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def quest_character_manager(quest_id):
     q_quest = Quest.read(id_=quest_id)
 
@@ -67,11 +67,8 @@ def quest_character_manager(quest_id):
 
 @bp.get("/edit/quest/<quest_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def edit_quest(quest_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     q_quest = Quest.read(id_=quest_id)
 
     if not q_quest:
@@ -89,11 +86,8 @@ def edit_quest(quest_id):
 
 @bp.get("/make-pending/quest/<quest_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def quest_pending(quest_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     Quest.update(id_=quest_id, values={"live": False})
     flash("Quest is now pending", "good")
     if request.args.get("var") == "edit":
@@ -103,11 +97,8 @@ def quest_pending(quest_id):
 
 @bp.get("/make-live/quest/<quest_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def quest_live(quest_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     Quest.update(id_=quest_id, values={"live": True})
     flash("Quest is now live", "good")
     if request.args.get("var") == "edit":
@@ -117,11 +108,8 @@ def quest_live(quest_id):
 
 @bp.post("/add/quest")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def add_quest():
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     title = request.form.get("title")
     fk_genre_id = request.form.get("fk_genre_id")
 
@@ -139,11 +127,8 @@ def add_quest():
 
 @bp.post("/update/quest/<quest_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def update_quest(quest_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     title = request.form.get("title")
     summary = request.form.get("summary")
     arc_cards = request.form.get("arc_cards")
@@ -167,11 +152,8 @@ def update_quest(quest_id):
 
 @bp.get("/delete/quest/<quest_id>")
 @login_check('authenticated', 'auth.login')
-@permission_check('permissions', 'www.index', ['admin'])
+@permission_check('permissions', 'www.index', [10])
 def delete_quest(quest_id):
-    if session.get("user_type") != 10:
-        return redirect(url_for("www.index"))
-
     Quest.delete(fields={"quest_id": quest_id}, return_deleted=True)
     flash(f"Quest deleted", "good")
     return redirect(url_for("www.quests"))

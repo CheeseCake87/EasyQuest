@@ -31,6 +31,7 @@ def login_post():
     if user:
         session['user_id'] = user.user_id
         session['user_type'] = user.user_type
+        session['permissions'] = [user.user_type]
         session['passport'] = user.passport
         session['authenticated'] = True
         return redirect(url_for('www.quests'))

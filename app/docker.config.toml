@@ -30,6 +30,7 @@ password = "<DB_PASSWORD>"
 [session]
 user_id = 0
 user_type = 0
+permissions = []
 passport = 0
 authenticated = false
 temp = { }
