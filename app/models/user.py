@@ -1,10 +1,11 @@
 from app.extensions import auth
+from flask_bigapp.orm import CrudMixin
 from . import *
-from .__mixins__ import CrudMixin
 
 
 class User(db.Model, CrudMixin):
-    id_field = 'user_id'
+    __id_field__ = 'user_id'
+    __session__ = db.session
 
     # PriKey
     user_id = schema.Column(types.Integer, primary_key=True)
@@ -14,12 +15,12 @@ class User(db.Model, CrudMixin):
     email_address = schema.Column(types.String(512), nullable=False)
     password = schema.Column(types.String(512), nullable=False)
     salt = schema.Column(types.String(4), nullable=False)
-    passport = schema.Column(types.Integer, nullable=False)
+    uuid = schema.Column(types.String(256), nullable=False)
     disabled = schema.Column(db.Boolean, default=False)
 
     # Permissions
     # 10 = admin, 1 = user
-    user_type = schema.Column(types.Integer, nullable=True)
+    permission_level = schema.Column(types.Integer, nullable=True)
 
     # Tracking
     created = schema.Column(types.DateTime, default=dater())
@@ -55,3 +56,17 @@ class User(db.Model, CrudMixin):
     def disable(cls, user_id):
         cls.update(id_=user_id, values={'disabled': True})
         return
+
+    @classmethod
+    def add_user(cls, first_name, email_address, password, permission_level=1):
+        salt = auth.generate_salt()
+        return cls.create(
+            values={
+                'first_name': first_name,
+                'email_address': email_address,
+                'password': auth.hash_password(password, salt),
+                'salt': salt,
+                'permission_level': permission_level,
+                'uuid': auth.generate_private_key(email_address)
+            }
+        )
