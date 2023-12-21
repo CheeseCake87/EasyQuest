@@ -1,7 +1,11 @@
 pytz
 flask
-flask-bigapp
+flask-imp
 flask-sqlalchemy
-gunicorn
+flask-orjson
+gunicorn[eventlet]
 python-dotenv
 psycopg2-binary
+huey
+gevent
+click

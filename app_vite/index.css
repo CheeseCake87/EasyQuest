@@ -1,0 +1,468 @@
+@import 'material-icons/iconfont/material-icons.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[data-theme='dark'] {
+    --html-body-bg-color: rgb(30, 36, 47);
+    --html-default-text-color: #ffffff;
+    --html-default-input-bg-color: rgba(56, 65, 80, 0.9);
+    --html-scrollbar-track: rgba(20, 25, 33);
+    --html-scrollbar-thumb: rgba(56, 65, 80, 0.9);
+    --html-scrollbar-thumb-hover: rgba(56, 65, 80, 1);
+
+    --dock-bg-color: rgba(20, 25, 33);
+    --dock-border-color: #2f2b3a;
+
+    --dock-item-bg-color: rgba(42, 48, 63);
+    --dock-item-text-color: #9f9f9f;
+    --dock-item-bg-color-selected: rgb(42, 48, 63);
+    --dock-item-text-color-selected: #ffffff;
+
+    --dock-tooltip-bg-color: #ffffff;
+    --dock-tooltip-text-color: #000000;
+
+    --menu-bg-color: rgb(26, 32, 42);
+    --menu-border-color: #2f2b3a;
+
+    --menu-sub-options-button-bg-color: rgba(50, 56, 73);
+    --menu-sub-options-button-text-color: #e1e1e1;
+
+    --menu-sub-options-button-bg-color-selected: rgb(63, 70, 89);
+    --menu-sub-options-button-text-color-selected: #ffffff;
+
+    --content-header-bg-color: #afafaf;
+
+    --btn-header-bg-color: rgba(62, 68, 86, 0.8);
+    --btn-header-bg-color-selected: rgb(76, 83, 103);
+    --btn-header-text-color: rgba(255, 255, 255, 0.8);
+    --btn-header-text-color-selected: rgb(255, 255, 255);
+
+    --btn-primary-bg-color: rgba(87, 62, 192, 0.8);
+    --btn-primary-bg-color-selected: rgba(87, 62, 192, 1);
+    --btn-primary-text-color: rgba(255, 255, 255, 0.8);
+    --btn-primary-text-color-selected: rgb(255, 255, 255);
+
+    --btn-danger-bg-color: rgba(168, 66, 66, 0.8);
+    --btn-danger-bg-color-selected: rgb(168, 66, 66);
+    --btn-danger-text-color: rgba(255, 255, 255, 0.8);
+    --btn-danger-text-color-selected: rgb(255, 255, 255);
+
+    --btn-success-bg-color: rgba(83, 168, 66, 0.8);
+    --btn-success-bg-color-selected: rgba(83, 168, 66, 1);
+    --btn-success-text-color: rgba(255, 255, 255, 0.8);
+    --btn-success-text-color-selected: rgb(255, 255, 255);
+}
+
+[data-theme='light'] {
+    --btn-primary-bg-color: #1c76c5;
+}
+
+@layer components {
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: var(--html-scrollbar-track);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--html-scrollbar-thumb);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--html-scrollbar-thumb-hover);
+    }
+
+    dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    dialog {
+        @apply hidden opacity-0 pointer-events-none rounded-md;
+        transition: opacity 0.5s;
+        color: var(--html-default-text-color);
+        background-color: var(--dock-item-bg-color);
+    }
+
+    dialog[open] {
+        opacity: 1;
+        display: flex;
+        flex-direction: column;
+        pointer-events: inherit;
+    }
+
+    .dialog-body {
+        @apply flex-1 overflow-y-auto p-5;
+    }
+
+    .dialog-footer {
+        @apply p-4 flex flex-row justify-end gap-4;
+        background-color: var(--dock-item-bg-color);
+    }
+
+    body {
+        background-color: var(--html-body-bg-color);
+    }
+
+    input, select {
+        @apply px-3 py-2 rounded-md w-full;
+        background-color: var(--html-default-input-bg-color);
+        color: #ffffff;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .content {
+        @apply flex-1 px-5 overflow-y-auto h-screen;
+        background-color: var(--html-body-bg-color);
+        color: var(--html-default-text-color);
+    }
+
+    .div-hide {
+        @apply hidden;
+    }
+
+    .extend-main {
+        @apply flex flex-row;
+    }
+
+    .menu-bg {
+        background-color: var(--menu-bg-color);
+    }
+
+    .menu-dock-bg {
+        background-color: var(--dock-bg-color);
+    }
+
+    .left-menu {
+        @apply fixed h-screen flex flex-row;
+        border-color: var(--menu-border-color);
+        border-right: 1px solid;
+    }
+
+    .left-menu-dock {
+        @apply flex flex-col gap-4 justify-start p-4;
+        border-color: var(--dock-border-color);
+        border-right: 1px solid;
+    }
+
+    .menu-container {
+        @apply flex flex-col h-full flex-grow-0 overflow-y-auto;
+    }
+
+    .menu-header {
+        @apply pb-4 pt-5 px-4 sticky top-0 flex flex-row gap-3 z-30;
+        background-color: var(--menu-bg-color);
+    }
+
+    .menu-header-col {
+        @apply menu-header flex-col;
+    }
+
+    .menu-header-buttons {
+        @apply flex flex-row gap-3;
+    }
+
+    .menu-body {
+        @apply flex flex-col px-4;
+    }
+
+    .menu-item-section {
+        @apply p-4 text-white rounded-md shadow cursor-pointer;
+        background-color: var(--dock-item-bg-color);
+    }
+
+    .menu-item-section:hover {
+        @apply shadow-2xl;
+        background-color: var(--dock-item-bg-color-selected);
+    }
+
+    .menu-sub-options {
+        @apply rounded-xl flex flex-col gap-0.5 mb-4;
+        background-color: var(--dock-item-bg-color);
+    }
+
+    .menu-sub-options-header {
+        @apply sticky rounded-b-xl;
+        background-color: var(--menu-bg-color);
+    }
+
+    .menu-sub-options-button-container {
+        @apply p-2 rounded-b-xl flex flex-col gap-0.5;
+        background-color: var(--dock-item-bg-color);
+    }
+
+    .menu-sub-options-button-container button {
+        @apply flex-1 flex align-middle justify-start mb-2 p-2
+        rounded-xl cursor-pointer select-none;
+        background-color: var(--menu-sub-options-button-bg-color);
+        color: var(--menu-sub-options-button-text-color);
+    }
+
+    .menu-sub-options-button-container button:hover {
+        background-color: var(--menu-sub-options-button-bg-color-selected);
+        color: var(--menu-sub-options-button-text-color-selected);
+    }
+
+    .menu-sub-options-button-container button.selected {
+        background-color: var(--menu-sub-options-button-bg-color-selected);
+        color: var(--menu-sub-options-button-text-color-selected);
+    }
+
+    .menu-sub-options-button-container-hide {
+        @apply hidden;
+    }
+
+    .menu-sub-options-button-container-hide * button {
+        @apply hidden;
+    }
+
+    .menu-sub-options form {
+        @apply flex flex-col gap-2 p-3;
+        color: var(--html-default-text-color);
+    }
+
+    .menu-sub-options form input, select {
+        background-color: var(--html-default-input-bg-color);
+    }
+
+    .right-menu {
+        @apply right-0 fixed h-screen flex flex-row justify-end;
+        border-color: var(--menu-border-color);
+        border-left: 1px solid;
+    }
+
+    .right-menu-dock {
+        @apply z-10 flex flex-col gap-4 justify-start p-4;
+        background-color: var(--dock-bg-color);
+        border-color: var(--dock-border-color);
+        border-left: 1px solid;
+    }
+
+    .dock-icon {
+        @apply flex align-middle justify-center p-3 rounded-xl
+        cursor-pointer select-none;
+        background-color: var(--dock-item-bg-color);
+        color: var(--dock-item-text-color);
+    }
+
+    .dock-icon:hover {
+        background-color: var(--dock-item-bg-color-selected);
+        color: var(--dock-item-text-color-selected);
+    }
+
+    .dock-icon-selected {
+        background-color: var(--dock-item-bg-color-selected);
+        color: var(--dock-item-text-color-selected);
+    }
+
+    .dock-tooltip {
+        @apply absolute p-1 px-2 rounded-md shadow-md z-40 hidden;
+        background-color: var(--dock-tooltip-bg-color);
+        color: var(--dock-tooltip-text-color);
+        margin-top: -4px;
+    }
+
+    .left-menu-dock-tooltip {
+        left: 74px;
+    }
+
+    .right-menu-dock-tooltip {
+        right: 74px;
+    }
+
+    .content-header {
+        @apply sticky top-0 flex justify-between py-5;
+        background-color: var(--html-body-bg-color);
+    }
+
+    .content-header-labeled-select {
+        @apply flex flex-row rounded-md;
+        background-color: var(--html-default-input-bg-color);
+        color: var(--html-default-text-color);
+    }
+
+    .content-header-labeled-select label {
+        @apply flex flex-col justify-center text-sm w-40 text-center;
+    }
+
+    .content-section {
+        @apply p-4 text-white rounded-md shadow mb-4;
+        background-color: var(--dock-item-bg-color);
+    }
+
+    .content-item-section {
+        @apply p-4 text-white rounded-md shadow cursor-pointer;
+        background-color: var(--dock-item-bg-color);
+    }
+
+    .content-item-section:hover {
+        @apply shadow-2xl;
+        background-color: var(--dock-item-bg-color-selected);
+    }
+
+    .content-sub-section {
+        @apply grid grid-cols-3 gap-4 py-5;
+    }
+
+    .content-sub-section-item {
+        @apply p-4 text-white rounded-md shadow flex flex-col justify-between;
+        background-color: var(--menu-sub-options-button-bg-color);
+    }
+
+    .content-sub-section-item-content {
+        /*    */
+    }
+
+    .content-sub-section-item-buttons {
+        @apply flex gap-2 mt-4 justify-end
+    }
+
+    .page-navigation {
+        @apply flex flex-row gap-2;
+    }
+
+    .page-navigation button {
+        @apply px-2 rounded-md flex flex-col justify-center text-sm;
+        background-color: var(--btn-primary-bg-color);
+        color: var(--btn-primary-text-color);
+    }
+
+    .page-navigation button:hover {
+        background-color: var(--btn-primary-bg-color-selected);
+        color: var(--btn-primary-text-color-selected);
+    }
+
+    .checkbox {
+        @apply relative inline-flex items-center cursor-pointer align-middle;
+    }
+
+    .checkbox-switch {
+        @apply relative inline-flex items-center cursor-pointer;
+        width: 2.5rem;
+        height: 1.25rem;
+        border-radius: 1.25rem;
+        background-color: var(--html-default-input-bg-color);
+    }
+
+    .checkbox-switch-button {
+        @apply absolute inline-flex items-center justify-center w-5 h-5
+        transition duration-200 ease-in-out bg-white rounded-full shadow
+        transform translate-x-0;
+    }
+
+    .checkbox-on .checkbox-switch-button {
+        transform: translateX(100%);
+    }
+
+    .checkbox-on .checkbox-switch {
+        background-color: var(--btn-primary-bg-color);
+    }
+
+    .checkbox-switch-text {
+        @apply ml-3;
+        color: var(--html-default-text-color);
+    }
+
+    .btn {
+        @apply flex flex-row align-middle justify-center
+        rounded-xl cursor-pointer select-none
+        font-semibold p-3 gap-1;
+    }
+
+    .btn-header {
+        @apply btn justify-between;
+        background: var(--btn-header-bg-color);
+        color: var(--btn-header-text-color);
+    }
+
+    .btn-header:hover {
+        background: var(--btn-header-bg-color-selected);
+        color: var(--btn-header-text-color-selected);
+    }
+
+    .btn-header-selected {
+        background: var(--btn-header-bg-color-selected);
+        color: var(--btn-header-text-color-selected);
+    }
+
+    .btn-primary {
+        @apply btn;
+        background: var(--btn-primary-bg-color);
+        color: var(--btn-primary-text-color);
+    }
+
+    .btn-primary:hover {
+        background: var(--btn-primary-bg-color-selected);
+        color: var(--btn-primary-text-color-selected);
+    }
+
+    .btn-danger {
+        @apply btn;
+        background: var(--btn-danger-bg-color);
+        color: var(--btn-danger-text-color);
+    }
+
+    .btn-danger:hover {
+        background: var(--btn-danger-bg-color-selected);
+        color: var(--btn-danger-text-color-selected);
+    }
+
+    .btn-success {
+        @apply btn;
+        background: var(--btn-success-bg-color);
+        color: var(--btn-success-text-color);
+    }
+
+    .btn-success:hover {
+        background: var(--btn-success-bg-color-selected);
+        color: var(--btn-success-text-color-selected);
+    }
+
+    .btn-sm {
+        @apply py-2 px-3;
+    }
+
+    .form-group {
+        @apply flex flex-row gap-4 items-center mb-5;
+    }
+
+    .form-group label {
+        @apply whitespace-nowrap;
+    }
+
+}

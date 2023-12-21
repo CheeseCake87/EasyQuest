@@ -1,36 +1,81 @@
+# Flask-Imp Config File
+# ------------------------
 # Updates the Flask app config with the variables below.
-# If any variable below does not exist in the standard Flask env vars it is created and will be accessible using
-# app.config["YOUR_VAR_NAME"]. All variables defined below will be capitalised when imported.
-
-[flask]
-APP_NAME = "easyquest"
-VERSION = "1.0.0"
-SECRET_KEY = "J3UsrFgrYfryeRdmYM5WMeCZM8tRWcmpsRRfqsx5m4ZbEFAfmDYmVyqDeWdrFEXVPpKAE6VBZfJTmvqB"
+# If any variable below does not exist in the standard Flask env
+# vars it is created and will be accessible using
+# app.config. All key names defined below will be
+# capitalised when imported.
+[FLASK]
 DEBUG = false
-TESTING = false
-SESSION_TIME = 480
+#PROPAGATE_EXCEPTIONS = true
+TRAP_HTTP_EXCEPTIONS = false
+#TRAP_BAD_REQUEST_ERRORS = true
+SECRET_KEY = "58a11e6efbe059eb2223b3128b39bc2bfb482364d1341d38"
+SESSION_COOKIE_NAME = "session"
+#SESSION_COOKIE_DOMAIN = "domain-here.com"
+#SESSION_COOKIE_PATH = "/"
+SESSION_COOKIE_HTTPONLY = true
+SESSION_COOKIE_SECURE = false
+SESSION_COOKIE_SAMESITE = "Lax"
+PERMANENT_SESSION_LIFETIME = 3600  # 1 hour
+SESSION_REFRESH_EACH_REQUEST = true
+USE_X_SENDFILE = false
+#SEND_FILE_MAX_AGE_DEFAULT = 43200
 ERROR_404_HELP = true
-SQLALCHEMY_TRACK_MODIFICATIONS = false
+#SERVER_NAME = "localhost:5000"
+APPLICATION_ROOT = "/"
+PREFERRED_URL_SCHEME = "http"
+#MAX_CONTENT_LENGTH = 0
+#TEMPLATES_AUTO_RELOAD = true
 EXPLAIN_TEMPLATE_LOADING = false
-RESET_DB = true
+MAX_COOKIE_SIZE = 4093
 
-# [database.main] is loaded as SQLALCHEMY_DATABASE_URI
-# type = mysql / postgresql / sqlite
-# if type = sqlite, config parser will ignore username and password
-[database]
-[database.main]
-enabled = true
-type = "sqlite"
-database_name = "database"
-location = "db"
-port = ""
-username = "user"
-password = "password"
+# This will set the default session variables for the app.
+# Anything here will be accessible using session["your_var_name"]
+# or session.get("your_var_name")
+[SESSION]
+#logged_in = false
 
-[session]
-user_id = 0
-user_type = 0
-permissions = []
-passport = 0
-authenticated = false
-temp = { }
+# These settings are specific to the Flask-SQLAlchemy extension.
+# Anything here will be accessible using app.config
+[SQLALCHEMY]
+SQLALCHEMY_ECHO = false
+SQLALCHEMY_TRACK_MODIFICATIONS = false
+SQLALCHEMY_RECORD_QUERIES = false
+# Below are extra settings that Flask-Imp uses but relates to Flask-SQLAlchemy.
+# This sets the file extension for SQLite databases, and where to create the folder
+# that the database will be stored in. true will create the folder on the same level as your
+# app, false will create the folder in the app root.
+SQLITE_DB_EXTENSION = ".sqlite"
+SQLITE_STORE_IN_PARENT = false
+
+# [DATABASE.MAIN] is loaded as SQLALCHEMY_DATABASE_URI
+# Dialets = mysql / postgresql / sqlite / oracle / mssql
+# Uncomment below to generate the SQLALCHEMY_DATABASE_URI.
+#[DATABASE.MAIN]
+#ENABLED = true
+#DIALECT = "sqlite"
+#DATABASE_NAME = "database"
+#LOCATION = ""
+#PORT = ""
+#USERNAME = ""
+#PASSWORD = ""
+
+# Adding another database is as simple as adding a new section.
+# [DATABASE.ANOTHER] will then be accessible using SQLALCHEMY_BINDS
+# The bind key will be stored as a lowercase value, so "ANOTHER" will
+# be accessible as "another"
+# You can then use the bind key in the model as follows:
+# class MyModel(db.Model):
+#     __bind_key__ = "another"
+#     ...
+
+# Uncomment below to generate and add to SQLALCHEMY_BINDS.
+#[DATABASE.ANOTHER]
+#ENABLED = true
+#DIALECT = "sqlite"
+#DATABASE_NAME = "another"
+#LOCATION = ""
+#PORT = ""
+#USERNAME = ""
+#PASSWORD = ""
