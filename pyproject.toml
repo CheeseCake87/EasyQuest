@@ -1,0 +1,9 @@
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 80
+indent-width = 4
+ignore = ["F403", "F405"]

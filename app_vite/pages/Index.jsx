@@ -8,7 +8,7 @@ export default function Index() {
 
     return (
         <>
-            <p>Test - {ctx.appCtx.theme}</p>
+            <div class={"large-test-div"}></div>
         </>
     );
 };

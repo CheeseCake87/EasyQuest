@@ -1,6 +1,7 @@
 import {createContext, createEffect, onMount} from "solid-js";
 import {Outlet} from "@solidjs/router";
 import {createStore} from "solid-js/store";
+import TopMenu from "../components/TopMenu";
 
 
 export const URL = 'http://127.0.0.1:5000';
@@ -12,6 +13,9 @@ const [appCtx, setAppCtx] = createStore({
 
     socket_client: null,
     theme: 'dark',
+
+    menu_dd_button: false,
+    menu_dd: false,
 
 });
 
@@ -38,6 +42,7 @@ export function MainContextProvider(props) {
 
     return (
         <mainContext.Provider value={{appCtx, setAppCtx}}>
+            <TopMenu/>
             <Outlet/>
         </mainContext.Provider>
     );

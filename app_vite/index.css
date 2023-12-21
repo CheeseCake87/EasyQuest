@@ -23,7 +23,7 @@
     --dock-tooltip-bg-color: #ffffff;
     --dock-tooltip-text-color: #000000;
 
-    --menu-bg-color: rgb(26, 32, 42);
+    --menu-bg-color: rgba(33, 44, 54, 1);
     --menu-border-color: #2f2b3a;
 
     --menu-sub-options-button-bg-color: rgba(50, 56, 73);
@@ -109,6 +109,8 @@
     }
 
     body {
+        margin: 0;
+        padding: 0;
         background-color: var(--html-body-bg-color);
     }
 
@@ -146,225 +148,30 @@
         margin-bottom: 0.8rem;
     }
 
-    .content {
-        @apply flex-1 px-5 overflow-y-auto h-screen;
-        background-color: var(--html-body-bg-color);
-        color: var(--html-default-text-color);
+    .large-test-div {
+        @apply border-2 border-red-500;
+        width: 100%;
+        height: 2000px;
     }
 
     .div-hide {
         @apply hidden;
     }
 
-    .extend-main {
-        @apply flex flex-row;
-    }
-
-    .menu-bg {
+    .top-nav {
+        @apply sticky top-0 flex justify-between align-middle px-5;
         background-color: var(--menu-bg-color);
+        height: 100px;
     }
 
-    .menu-dock-bg {
-        background-color: var(--dock-bg-color);
+    .top-nav img {
+        @apply cursor-pointer;
+        max-height: 60px;
+        display: block;
     }
 
-    .left-menu {
-        @apply fixed h-screen flex flex-row;
-        border-color: var(--menu-border-color);
-        border-right: 1px solid;
-    }
-
-    .left-menu-dock {
-        @apply flex flex-col gap-4 justify-start p-4;
-        border-color: var(--dock-border-color);
-        border-right: 1px solid;
-    }
-
-    .menu-container {
-        @apply flex flex-col h-full flex-grow-0 overflow-y-auto;
-    }
-
-    .menu-header {
-        @apply pb-4 pt-5 px-4 sticky top-0 flex flex-row gap-3 z-30;
-        background-color: var(--menu-bg-color);
-    }
-
-    .menu-header-col {
-        @apply menu-header flex-col;
-    }
-
-    .menu-header-buttons {
-        @apply flex flex-row gap-3;
-    }
-
-    .menu-body {
-        @apply flex flex-col px-4;
-    }
-
-    .menu-item-section {
-        @apply p-4 text-white rounded-md shadow cursor-pointer;
-        background-color: var(--dock-item-bg-color);
-    }
-
-    .menu-item-section:hover {
-        @apply shadow-2xl;
-        background-color: var(--dock-item-bg-color-selected);
-    }
-
-    .menu-sub-options {
-        @apply rounded-xl flex flex-col gap-0.5 mb-4;
-        background-color: var(--dock-item-bg-color);
-    }
-
-    .menu-sub-options-header {
-        @apply sticky rounded-b-xl;
-        background-color: var(--menu-bg-color);
-    }
-
-    .menu-sub-options-button-container {
-        @apply p-2 rounded-b-xl flex flex-col gap-0.5;
-        background-color: var(--dock-item-bg-color);
-    }
-
-    .menu-sub-options-button-container button {
-        @apply flex-1 flex align-middle justify-start mb-2 p-2
-        rounded-xl cursor-pointer select-none;
-        background-color: var(--menu-sub-options-button-bg-color);
-        color: var(--menu-sub-options-button-text-color);
-    }
-
-    .menu-sub-options-button-container button:hover {
-        background-color: var(--menu-sub-options-button-bg-color-selected);
-        color: var(--menu-sub-options-button-text-color-selected);
-    }
-
-    .menu-sub-options-button-container button.selected {
-        background-color: var(--menu-sub-options-button-bg-color-selected);
-        color: var(--menu-sub-options-button-text-color-selected);
-    }
-
-    .menu-sub-options-button-container-hide {
-        @apply hidden;
-    }
-
-    .menu-sub-options-button-container-hide * button {
-        @apply hidden;
-    }
-
-    .menu-sub-options form {
-        @apply flex flex-col gap-2 p-3;
-        color: var(--html-default-text-color);
-    }
-
-    .menu-sub-options form input, select {
-        background-color: var(--html-default-input-bg-color);
-    }
-
-    .right-menu {
-        @apply right-0 fixed h-screen flex flex-row justify-end;
-        border-color: var(--menu-border-color);
-        border-left: 1px solid;
-    }
-
-    .right-menu-dock {
-        @apply z-10 flex flex-col gap-4 justify-start p-4;
-        background-color: var(--dock-bg-color);
-        border-color: var(--dock-border-color);
-        border-left: 1px solid;
-    }
-
-    .dock-icon {
-        @apply flex align-middle justify-center p-3 rounded-xl
-        cursor-pointer select-none;
-        background-color: var(--dock-item-bg-color);
-        color: var(--dock-item-text-color);
-    }
-
-    .dock-icon:hover {
-        background-color: var(--dock-item-bg-color-selected);
-        color: var(--dock-item-text-color-selected);
-    }
-
-    .dock-icon-selected {
-        background-color: var(--dock-item-bg-color-selected);
-        color: var(--dock-item-text-color-selected);
-    }
-
-    .dock-tooltip {
-        @apply absolute p-1 px-2 rounded-md shadow-md z-40 hidden;
-        background-color: var(--dock-tooltip-bg-color);
-        color: var(--dock-tooltip-text-color);
-        margin-top: -4px;
-    }
-
-    .left-menu-dock-tooltip {
-        left: 74px;
-    }
-
-    .right-menu-dock-tooltip {
-        right: 74px;
-    }
-
-    .content-header {
-        @apply sticky top-0 flex justify-between py-5;
-        background-color: var(--html-body-bg-color);
-    }
-
-    .content-header-labeled-select {
-        @apply flex flex-row rounded-md;
-        background-color: var(--html-default-input-bg-color);
-        color: var(--html-default-text-color);
-    }
-
-    .content-header-labeled-select label {
-        @apply flex flex-col justify-center text-sm w-40 text-center;
-    }
-
-    .content-section {
-        @apply p-4 text-white rounded-md shadow mb-4;
-        background-color: var(--dock-item-bg-color);
-    }
-
-    .content-item-section {
-        @apply p-4 text-white rounded-md shadow cursor-pointer;
-        background-color: var(--dock-item-bg-color);
-    }
-
-    .content-item-section:hover {
-        @apply shadow-2xl;
-        background-color: var(--dock-item-bg-color-selected);
-    }
-
-    .content-sub-section {
-        @apply grid grid-cols-3 gap-4 py-5;
-    }
-
-    .content-sub-section-item {
-        @apply p-4 text-white rounded-md shadow flex flex-col justify-between;
-        background-color: var(--menu-sub-options-button-bg-color);
-    }
-
-    .content-sub-section-item-content {
-        /*    */
-    }
-
-    .content-sub-section-item-buttons {
-        @apply flex gap-2 mt-4 justify-end
-    }
-
-    .page-navigation {
-        @apply flex flex-row gap-2;
-    }
-
-    .page-navigation button {
-        @apply px-2 rounded-md flex flex-col justify-center text-sm;
-        background-color: var(--btn-primary-bg-color);
-        color: var(--btn-primary-text-color);
-    }
-
-    .page-navigation button:hover {
-        background-color: var(--btn-primary-bg-color-selected);
-        color: var(--btn-primary-text-color-selected);
+    .top-nav-item {
+        @apply flex flex-row items-center justify-center gap-4;
     }
 
     .checkbox {
